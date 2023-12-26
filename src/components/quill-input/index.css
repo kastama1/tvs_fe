@@ -1,0 +1,49 @@
+.form .input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.form .input-container label {
+  font-size: var(--font-size);
+  margin-bottom: 4px;
+}
+.form .input-container input, .form .input-container select {
+  height: 30px;
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius-small);
+  margin-bottom: 4px;
+  padding: 5px;
+}
+.form .input-container input:focus-visible, .form .input-container select:focus-visible {
+  outline: var(--color-black) solid 1px;
+}
+.form .input-container .ql-toolbar.ql-snow {
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
+}
+.form .input-container .ql-container.ql-snow {
+  border: 1px solid var(--color-black);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius-small) var(--border-radius-small);
+}
+.form .input-container .error-message {
+  color: var(--color-red);
+  font-size: 14px;
+  padding-top: 2px;
+}
+.form button {
+  width: 100%;
+  font-size: var(--font-size);
+  font-weight: 600;
+  color: var(--color-white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-normal);
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-blue);
+}
+.form button:hover {
+  background-color: var(--color-blue-darken);
+}
+
+/*# sourceMappingURL=index.css.map */

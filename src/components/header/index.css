@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 50px;
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow);
+}
+.header .logo {
+  display: flex;
+  gap: 20px;
+}
+.header .logo h1 {
+  margin: 0;
+  color: var(--color-blue);
+  font-size: 40px;
+}
+.header .logo img {
+  height: 45px;
+  width: auto;
+  -webkit-filter: drop-shadow(5px 5px 5px #222222);
+  filter: drop-shadow(5px 5px 5px #222222);
+}
+.header .links {
+  display: flex;
+  gap: 10px;
+}
+.header .links a {
+  font-size: 20px;
+  color: var(--color-text);
+}
+.header .links a:hover {
+  color: var(--color-red);
+}
+.header .links button {
+  padding: 0;
+  font-size: 20px;
+  color: var(--color-text);
+  border: none;
+  background-color: transparent;
+}
+.header .links button:hover {
+  cursor: pointer;
+  color: var(--color-red);
+}
+.header .links .active {
+  color: var(--color-red);
+}
+.header .links span {
+  margin-top: 4px;
+  cursor: default;
+}
+
+/*# sourceMappingURL=index.css.map */

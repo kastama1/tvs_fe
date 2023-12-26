@@ -1,0 +1,19 @@
+.election {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    a {
+        color: var(--color-red);
+        font-size: var(--font-size-h2);
+
+        &:hover {
+            color: var(--color-red-darken);
+        }
+    }
+
+    .election-date {
+        display: flex;
+        gap: 5px;
+    }
+}

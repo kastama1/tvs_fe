@@ -1,0 +1,9 @@
+.heading-container {
+  padding: 0px !important;
+}
+.heading-container .heading {
+  font-size: var(--font-size-h1);
+  color: var(--color-blue);
+}
+
+/*# sourceMappingURL=index.css.map */

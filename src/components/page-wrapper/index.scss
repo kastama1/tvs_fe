@@ -1,0 +1,27 @@
+.page-wrapper {
+    width: 100%;
+    height: calc(100% - 90px);
+
+    margin: 0;
+
+    .container {
+        width: 80%;
+        height: 100%;
+
+        padding: 30px 20px;
+        margin: auto;
+
+        & > div {
+            padding: 10px;
+
+            & > a {
+                color: var(--color-red);
+                font-size: var(--font-size);
+
+                &:hover {
+                    color: var(--color-red-darken)
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.page-wrapper {
+  width: 100%;
+  height: calc(100% - 90px);
+  margin: 0;
+}
+.page-wrapper .container {
+  width: 80%;
+  height: 100%;
+  padding: 30px 20px;
+  margin: auto;
+}
+.page-wrapper .container > div {
+  padding: 10px;
+}
+.page-wrapper .container > div > a {
+  color: var(--color-red);
+  font-size: var(--font-size);
+}
+.page-wrapper .container > div > a:hover {
+  color: var(--color-red-darken);
+}
+
+/*# sourceMappingURL=index.css.map */

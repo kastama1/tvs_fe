@@ -1,0 +1,19 @@
+.election-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+.election-list .election-type {
+  margin-bottom: 10px;
+}
+.election-list .election-type h2 {
+  font-size: var(--font-size-h2);
+  color: var(--color-black);
+  text-decoration: underline;
+}
+.election-list .election-type:last-child {
+  margin-bottom: 0;
+}
+
+/*# sourceMappingURL=index.css.map */

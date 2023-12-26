@@ -1,0 +1,18 @@
+.election {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.election a {
+  color: var(--color-red);
+  font-size: var(--font-size-h2);
+}
+.election a:hover {
+  color: var(--color-red-darken);
+}
+.election .election-date {
+  display: flex;
+  gap: 5px;
+}
+
+/*# sourceMappingURL=index.css.map */
