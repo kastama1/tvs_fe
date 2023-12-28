@@ -1,0 +1,27 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: var(--box-shadow);
+}
+.table td, .table th {
+  border: 1px solid var(--color-black);
+  text-align: center;
+  padding: 8px;
+}
+.table td a, .table th a {
+  color: var(--color-red);
+  text-decoration: none;
+  font-weight: bold;
+}
+.table td a:hover, .table th a:hover {
+  color: var(--color-red-darken);
+}
+.table th {
+  color: var(--color-white);
+  background-color: var(--color-blue);
+}
+.table tr:hover {
+  background-color: var(--color-gray-light);
+}
+
+/*# sourceMappingURL=index.css.map */

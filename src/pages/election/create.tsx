@@ -6,10 +6,11 @@ import * as Yup from 'yup'
 import FormWrapper from '../../components/form'
 import { ElectionTypeEnum } from '../../utils/enums/ElectionTypeEnum'
 import momentDefault from '../../utils/dateTimeZone'
+import Loading from '../../page-section/loading'
 
 const ElectionCreate = () => {
     useTitle('Volby')
-    useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth' })
 
     const mapOptions = () => {
         return Object.entries(ElectionTypeEnum).map(([value, text]) => ({
@@ -86,6 +87,10 @@ const ElectionCreate = () => {
 
     const handleSubmit = async (data: any) => {
         api.store(data)
+    }
+
+    if (isLoading || !user) {
+        return <Loading />
     }
 
     return (

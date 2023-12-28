@@ -10,10 +10,10 @@ interface electionListProps {
 const ElectionList: React.FC<electionListProps> = ({ electionsByType }) => {
     return (
         <div className="election-list">
-            {electionsByType.map((type) => {
+            {electionsByType.map((type, index) => {
                 return (
                     type.elections.length > 0 && (
-                        <div className="election-type">
+                        <div className="election-type" key={index}>
                             <h2>{ElectionTypeEnum[type.type]}</h2>
                             {type.elections.map((election) => {
                                 return (

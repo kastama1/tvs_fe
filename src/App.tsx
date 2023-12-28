@@ -5,11 +5,15 @@ import Login from './pages/login'
 import PageWrapper from './components/page-wrapper'
 import Registration from './pages/registration'
 import { ToastContainer } from 'react-toastify'
+import moment from 'moment-timezone'
 import Election from './pages/election/list'
 import ElectionShow from './pages/election/show'
 import ElectionCreate from './pages/election/create'
 import ElectionEdit from './pages/election/edit'
-import moment from 'moment-timezone'
+import ElectionParty from './pages/election-party/list'
+import ElectionPartyShow from './pages/election-party/show'
+import ElectionPartyCreate from './pages/election-party/create'
+import ElectionPartyEdit from './pages/election-party/edit'
 
 function App(this: any) {
     moment.tz.setDefault('Europe/Prague')
@@ -24,6 +28,13 @@ function App(this: any) {
             name: 'Volby',
             path: '/elections',
             element: <Election />,
+            auth: true,
+        },
+        {
+            name: 'Politické strany',
+            path: '/election-parties',
+            element: <ElectionParty />,
+            auth: true,
         },
     ]
 
@@ -39,6 +50,18 @@ function App(this: any) {
         {
             path: '/elections/:id/edit',
             element: <ElectionEdit />,
+        },
+        {
+            path: '/election-parties/:id',
+            element: <ElectionPartyShow />,
+        },
+        {
+            path: '/election-parties/create',
+            element: <ElectionPartyCreate />,
+        },
+        {
+            path: '/election-parties/:id/edit',
+            element: <ElectionPartyEdit />,
         },
         {
             path: '/login',
@@ -63,6 +86,7 @@ function App(this: any) {
                 <Routes>{routesComponents}</Routes>
             </PageWrapper>
             <ToastContainer
+                limit={5}
                 position="top-center"
                 autoClose={3000}
                 hideProgressBar={false}

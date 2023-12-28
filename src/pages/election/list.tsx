@@ -3,23 +3,30 @@ import Heading from '../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../utils/api/election'
 import useAuth from '../../hooks/useAuth'
-import ElectionList from '../../page-section/election/election-list'
-import ElectionsByType from '../../utils/models/election-by-type.model'
 import { Link } from 'react-router-dom'
+import ElectionModel from '../../utils/models/election.model'
+import Table from '../../components/table'
+import ElectionTableHeader from '../../page-section/election/election-table-header'
+import ElectionTableRow from '../../page-section/election/election-table-row'
+import Loading from '../../page-section/loading'
 
 const Election = () => {
     useTitle('Volby')
-    useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth' })
 
-    const [electionsByType, setElectionsByType] = useState<ElectionsByType[]>(
-        []
-    )
+    const [elections, setElections] = useState<ElectionModel[]>([])
 
     useEffect(() => {
-        api.listByType().then((data) => {
-            setElectionsByType(data)
-        })
+        if (user) {
+            api.list().then((data) => {
+                setElections(data)
+            })
+        }
     }, [])
+
+    if ((isLoading || !user) && !elections) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -29,9 +36,23 @@ const Election = () => {
                 <Link to={'/elections/create'}>Přidat nové volby</Link>
             </div>
 
-            {electionsByType && (
-                <ElectionList electionsByType={electionsByType} />
-            )}
+            <Table>
+                <>
+                    <thead>
+                        <ElectionTableHeader />
+                    </thead>
+                    <tbody>
+                        {elections.map((election, index) => {
+                            return (
+                                <ElectionTableRow
+                                    election={election}
+                                    key={index}
+                                />
+                            )
+                        })}
+                    </tbody>
+                </>
+            </Table>
         </>
     )
 }

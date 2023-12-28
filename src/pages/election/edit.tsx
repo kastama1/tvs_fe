@@ -9,10 +9,11 @@ import * as Yup from 'yup'
 import FormWrapper from '../../components/form'
 import { ElectionTypeEnum } from '../../utils/enums/ElectionTypeEnum'
 import momentDefault from '../../utils/dateTimeZone'
+import Loading from '../../page-section/loading'
 
 const ElectionEdit = () => {
     useTitle('Volby')
-    useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth' })
     const { id } = useParams()
 
     const [election, setElection] = useState<Election>({
@@ -28,9 +29,11 @@ const ElectionEdit = () => {
     })
 
     useEffect(() => {
-        api.show(id).then((data) => {
-            setElection(data)
-        })
+        if (user) {
+            api.show(id).then((data) => {
+                setElection(data)
+            })
+        }
     }, [])
 
     const mapOptions = () => {
@@ -108,6 +111,10 @@ const ElectionEdit = () => {
 
     const handleSubmit = async (data: any) => {
         api.update(election.id, data)
+    }
+
+    if ((isLoading || !user) && !election) {
+        return <Loading />
     }
 
     return (

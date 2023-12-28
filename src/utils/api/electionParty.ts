@@ -2,16 +2,16 @@ import axios from '../axios'
 import { toast } from 'react-toastify'
 
 const list = async () => {
-    const result = await axios.get(`/api/elections`).catch((error) => {
+    const result = await axios.get(`/api/election-parties`).catch((error) => {
         toast.error('Něco se pokazilo')
     })
 
     return result?.data.data
 }
 
-const listByType = async () => {
+const show = async (id: string | undefined) => {
     const result = await axios
-        .get(`/api/elections/list-by-type`)
+        .get(`/api/election-parties/${id}`)
         .catch((error) => {
             toast.error('Něco se pokazilo')
         })
@@ -19,19 +19,11 @@ const listByType = async () => {
     return result?.data.data
 }
 
-const show = async (id: string | undefined) => {
-    const result = await axios.get(`/api/elections/${id}`).catch((error) => {
-        toast.error('Něco se pokazilo')
-    })
-
-    return result?.data.data
-}
-
 const store = (data: any) => {
     axios
-        .post(`/api/elections`, data)
+        .post(`/api/election-parties`, data)
         .then((response) => {
-            toast.success('Volby byly přidány úspěšně.')
+            toast.success('Politická strana byla přidána úspěšně.')
         })
         .catch((error) => {
             if (error.response.status === 422) {
@@ -44,9 +36,9 @@ const store = (data: any) => {
 
 const update = (id: number, data: any) => {
     axios
-        .put(`/api/elections/${id}`, data)
+        .put(`/api/election-parties/${id}`, data)
         .then((response) => {
-            toast.success('Volby byly úspěšně upraveny.')
+            toast.success('Politická strana byla úspěšně upravena.')
         })
         .catch((error) => {
             if (error.response.status === 422) {
@@ -57,4 +49,4 @@ const update = (id: number, data: any) => {
         })
 }
 
-export default { list, listByType, show, store, update }
+export default { list, show, store, update }

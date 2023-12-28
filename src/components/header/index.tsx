@@ -1,31 +1,48 @@
-import React, { Fragment, JSX } from 'react'
+import React, { Fragment, JSX, useEffect, useState } from 'react'
 import './index.scss'
 import { NavLink } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 
 interface headerProps {
     routes: {
+        navlink?: React.JSX.Element
         name: string
         path: string
         element: JSX.Element
+        auth?: boolean
     }[]
 }
 const Header: React.FC<headerProps> = ({ routes }) => {
-    const { logout, user } = useAuth({ middleware: 'guest' })
+    const { logout, user } = useAuth({ middleware: undefined })
+    const [navLinks, setNavLinks] = useState<any[]>([])
 
-    const links = routes.map((route, index, { length }) => {
-        return (
-            <Fragment key={index}>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'active' : '')}
-                    to={route.path}
-                >
-                    {route.name}
-                </NavLink>
-                <span>/</span>
-            </Fragment>
-        )
-    })
+    const renderLink = () => {
+        const links: React.SetStateAction<any[]> = []
+
+        routes.map((route, index) => {
+            if ((user && route.auth) || !route.auth) {
+                const link = (
+                    <Fragment key={index}>
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive ? 'active' : ''
+                            }
+                            to={route.path}
+                        >
+                            {route.name}
+                        </NavLink>
+                        <span>/</span>
+                    </Fragment>
+                )
+                links.push(link)
+            }
+        })
+        setNavLinks(links)
+    }
+
+    useEffect(() => {
+        renderLink()
+    }, [user])
 
     const handleLogout = async () => {
         await logout()
@@ -38,7 +55,9 @@ const Header: React.FC<headerProps> = ({ routes }) => {
                 <img src={'/logo.png'} />
             </div>
             <div className="links">
-                {links}
+                {navLinks.map((navlink) => {
+                    return navlink
+                })}
                 {user ? (
                     <button onClick={handleLogout}>Odhlásit se</button>
                 ) : (
