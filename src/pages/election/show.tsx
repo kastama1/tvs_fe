@@ -3,20 +3,22 @@ import Heading from '../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../utils/api/election'
 import useAuth from '../../hooks/useAuth'
-import Election from '../../utils/models/election.model'
 import { Link, useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
+import ElectionModel from '../../utils/models/election.model'
+import Loading from '../../page-section/loading'
 
 const ElectionShow = () => {
     useTitle('Volby')
-    useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth' })
     const { id } = useParams()
 
-    const [election, setElection] = useState<Election>({
+    const [election, setElection] = useState<ElectionModel>({
         id: 0,
         name: '',
         type: 'presidential_election',
         info: '',
+        electionParties: [],
         publishFrom: '',
         startFrom: '',
         endTo: '',
@@ -25,10 +27,16 @@ const ElectionShow = () => {
     })
 
     useEffect(() => {
-        api.show(id).then((data) => {
-            setElection(data)
-        })
-    }, [])
+        if (user && id) {
+            api.show(id).then((data) => {
+                setElection(data)
+            })
+        }
+    }, [user, id])
+
+    if ((isLoading || !user) && election.id) {
+        return <Loading />
+    }
 
     return (
         <>
@@ -36,7 +44,11 @@ const ElectionShow = () => {
             <div>
                 <Link to={`/elections/${election.id}/edit`}>Upravit</Link>
             </div>
-            <div></div>
+            <div>
+                <Link to={`/elections/${election.id}/assign-election-parties`}>
+                    Přidat politické strany
+                </Link>
+            </div>
             <div>{parse(election.info)}</div>
         </>
     )

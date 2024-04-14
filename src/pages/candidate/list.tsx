@@ -1,51 +1,52 @@
 import { useTitle } from '../../hooks/useTitle'
 import Heading from '../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/election'
+import api from '../../utils/api/candidate'
 import useAuth from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import ElectionModel from '../../utils/models/election.model'
 import Table from '../../components/table'
-import ElectionTableHeader from '../../page-section/election/election-table-header'
-import ElectionTableRow from '../../page-section/election/election-table-row'
 import Loading from '../../page-section/loading'
+import CandidateModel from '../../utils/models/candidate.model'
+import CandidateTableHeader from '../../page-section/candidate/candidate-table-header'
+import CandidateTableRow from '../../page-section/candidate/candidate-table-row'
 
-const Election = () => {
-    useTitle('Volby')
+const Candidate = () => {
+    useTitle('Kandidáti')
     const { user, isLoading } = useAuth({ middleware: 'auth' })
 
-    const [elections, setElections] = useState<ElectionModel[]>([])
+    const [candidates, setCandidates] = useState<CandidateModel[]>([])
 
     useEffect(() => {
         if (user) {
             api.list().then((data) => {
-                setElections(data)
+                setCandidates(data)
             })
         }
     }, [user])
 
-    if ((isLoading || !user) && elections.length === 0) {
+    if ((isLoading || !user) && candidates.length === 0) {
         return <Loading />
     }
 
     return (
         <>
-            <Heading>Volby</Heading>
+            <Heading>Kandidáti</Heading>
 
             <div>
-                <Link to={'/elections/create'}>Přidat nové volby</Link>
+                <Link to={'/candidates/create'}>Přidat nového kandidáta</Link>
             </div>
 
             <Table>
                 <>
                     <thead>
-                        <ElectionTableHeader />
+                        <CandidateTableHeader />
                     </thead>
+
                     <tbody>
-                        {elections.map((election, index) => {
+                        {candidates.map((candidate, index) => {
                             return (
-                                <ElectionTableRow
-                                    election={election}
+                                <CandidateTableRow
+                                    candidate={candidate}
                                     key={index}
                                 />
                             )
@@ -57,4 +58,4 @@ const Election = () => {
     )
 }
 
-export default Election
+export default Candidate

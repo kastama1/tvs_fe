@@ -16,6 +16,7 @@ const ElectionPartyTableRow: React.FC<electionPartyTableRowProps> = ({
                     {electionParty.name}
                 </Link>
             </td>
+            <td>{electionParty.candidates?.length}</td>
             <td>
                 <div>
                     <Link to={`/election-parties/${electionParty.id}`}>

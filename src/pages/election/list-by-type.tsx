@@ -6,20 +6,27 @@ import useAuth from '../../hooks/useAuth'
 import ElectionList from '../../page-section/election/election-list'
 import ElectionsByType from '../../utils/models/election-by-type.model'
 import { Link } from 'react-router-dom'
+import Loading from '../../page-section/loading'
 
 const ElectionListByType = () => {
     useTitle('Volby')
-    useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth' })
 
     const [electionsByType, setElectionsByType] = useState<ElectionsByType[]>(
         []
     )
 
     useEffect(() => {
-        api.listByType().then((data) => {
-            setElectionsByType(data)
-        })
-    }, [])
+        if (user) {
+            api.listByType().then((data) => {
+                setElectionsByType(data)
+            })
+        }
+    }, [user])
+
+    if ((isLoading || !user) && electionsByType.length === 0) {
+        return <Loading />
+    }
 
     return (
         <>

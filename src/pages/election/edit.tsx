@@ -3,24 +3,26 @@ import Heading from '../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../utils/api/election'
 import useAuth from '../../hooks/useAuth'
-import Election from '../../utils/models/election.model'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import FormWrapper from '../../components/form'
 import { ElectionTypeEnum } from '../../utils/enums/ElectionTypeEnum'
 import momentDefault from '../../utils/dateTimeZone'
 import Loading from '../../page-section/loading'
+import ElectionModel from '../../utils/models/election.model'
 
 const ElectionEdit = () => {
     useTitle('Volby')
     const { user, isLoading } = useAuth({ middleware: 'auth' })
     const { id } = useParams()
+    const navigate = useNavigate()
 
-    const [election, setElection] = useState<Election>({
+    const [election, setElection] = useState<ElectionModel>({
         id: 0,
         name: '',
         type: 'presidential_election',
         info: '',
+        electionParties: [],
         publishFrom: '',
         startFrom: '',
         endTo: '',
@@ -29,12 +31,12 @@ const ElectionEdit = () => {
     })
 
     useEffect(() => {
-        if (user) {
+        if (user && id) {
             api.show(id).then((data) => {
                 setElection(data)
             })
         }
-    }, [])
+    }, [user, id])
 
     const mapOptions = () => {
         return Object.entries(ElectionTypeEnum).map(([value, text]) => ({
@@ -111,9 +113,11 @@ const ElectionEdit = () => {
 
     const handleSubmit = async (data: any) => {
         api.update(election.id, data)
+
+        navigate('/elections')
     }
 
-    if ((isLoading || !user) && !election) {
+    if ((isLoading || !user) && election.id === 0) {
         return <Loading />
     }
 

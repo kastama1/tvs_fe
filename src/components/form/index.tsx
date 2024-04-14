@@ -1,9 +1,12 @@
 import React from 'react'
 import './index.scss'
-import { Formik, Form, ErrorMessage } from 'formik'
+import { ErrorMessage, Form, Formik } from 'formik'
 import Input from '../input'
 import Select from '../select'
 import QuillInput from '../quill-input'
+import Checkbox from '../checkbox'
+import FileInput from '../input-file'
+import File from '../../utils/models/file.model'
 
 interface formProps {
     inputs: {
@@ -14,6 +17,7 @@ interface formProps {
             value: string
             text: string
         }[]
+        initialFiles?: File[]
     }[]
     initialValues: {}
     validationSchema?: any | (() => any)
@@ -30,15 +34,42 @@ const FormWrapper: React.FC<formProps> = ({
     const renderField = (
         name: string,
         type: string,
-        options?: { value: string; text: string }[]
+        setFieldValue: (
+            field: string,
+            value: any,
+            shouldValidate?: boolean | undefined
+        ) => void,
+        options?: { value: string; text: string }[],
+        initialFiles?: File[]
     ) => {
         switch (type) {
             case 'select':
+                return options ? <Select name={name} options={options} /> : null
+            case 'checkbox':
                 return options ? (
-                    <Select name={name} type={type} options={options} />
+                    <Checkbox name={name} options={options} />
                 ) : null
             case 'texteditor':
                 return <QuillInput name={name} />
+            case 'file':
+                return (
+                    <FileInput
+                        name={name}
+                        type={'file'}
+                        setFieldValue={setFieldValue}
+                        files={initialFiles}
+                    />
+                )
+            case 'files':
+                return (
+                    <FileInput
+                        name={name}
+                        type={'file'}
+                        setFieldValue={setFieldValue}
+                        multiple={true}
+                        files={initialFiles}
+                    />
+                )
             default:
                 return <Input name={name} type={type} />
         }
@@ -46,27 +77,40 @@ const FormWrapper: React.FC<formProps> = ({
 
     return (
         <Formik
-            enableReinitialize
             initialValues={initialValues}
-            validationSchema={validationSchema}
             onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+            enableReinitialize
         >
-            <Form className="form">
-                {inputs.map(({ label, name, type, options }, index) => {
-                    return (
-                        <div className="input-container" key={index}>
-                            <label>{label}</label>
-                            {renderField(name, type, options)}
-                            <div className="error-message">
-                                <ErrorMessage name={name} />
-                            </div>
-                        </div>
-                    )
-                })}
-                <button type="submit">
-                    {submitText ? submitText : 'Odeslat'}
-                </button>
-            </Form>
+            {({ setFieldValue }) => (
+                <Form className="form">
+                    {inputs.map(
+                        (
+                            { label, name, type, options, initialFiles },
+                            index
+                        ) => {
+                            return (
+                                <div className="input-container" key={index}>
+                                    <label>{label}</label>
+                                    {renderField(
+                                        name,
+                                        type,
+                                        setFieldValue,
+                                        options,
+                                        initialFiles
+                                    )}
+                                    <div className="error-message">
+                                        <ErrorMessage name={name} />
+                                    </div>
+                                </div>
+                            )
+                        }
+                    )}
+                    <button type="submit">
+                        {submitText ? submitText : 'Odeslat'}
+                    </button>
+                </Form>
+            )}
         </Formik>
     )
 }

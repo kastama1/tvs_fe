@@ -7,10 +7,12 @@ import FormWrapper from '../../components/form'
 import { ElectionTypeEnum } from '../../utils/enums/ElectionTypeEnum'
 import momentDefault from '../../utils/dateTimeZone'
 import Loading from '../../page-section/loading'
+import { useNavigate } from 'react-router-dom'
 
 const ElectionCreate = () => {
     useTitle('Volby')
     const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const navigate = useNavigate()
 
     const mapOptions = () => {
         return Object.entries(ElectionTypeEnum).map(([value, text]) => ({
@@ -87,6 +89,8 @@ const ElectionCreate = () => {
 
     const handleSubmit = async (data: any) => {
         api.store(data)
+
+        navigate('/elections')
     }
 
     if (isLoading || !user) {

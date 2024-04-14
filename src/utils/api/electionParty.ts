@@ -9,7 +9,7 @@ const list = async () => {
     return result?.data.data
 }
 
-const show = async (id: string | undefined) => {
+const show = async (id: string) => {
     const result = await axios
         .get(`/api/election-parties/${id}`)
         .catch((error) => {

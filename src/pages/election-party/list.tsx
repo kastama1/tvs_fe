@@ -24,9 +24,9 @@ const ElectionParty = () => {
                 setElectionParties(data)
             })
         }
-    }, [])
+    }, [user])
 
-    if ((isLoading || !user) && !electionParties) {
+    if ((isLoading || !user) && electionParties.length === 0) {
         return <Loading />
     }
 

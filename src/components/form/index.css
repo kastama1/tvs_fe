@@ -17,6 +17,21 @@
 .form .input-container input:focus-visible, .form .input-container select:focus-visible {
   outline: var(--color-black) solid 1px;
 }
+.form .input-container .checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form .input-container .checkbox-container label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.form .input-container .checkbox-container input {
+  margin: 0;
+  height: auto;
+}
 .form .input-container .error-message {
   color: var(--color-red);
   font-size: 14px;

@@ -3,10 +3,9 @@ import { Field } from 'formik'
 
 interface selectProps {
     name: string
-    type: string
     options: { value: string; text: string }[]
 }
-const Select: React.FC<selectProps> = ({ name, type, options }) => {
+const Select: React.FC<selectProps> = ({ name, options }) => {
     return (
         <Field id={name} name={name} as="select">
             {options &&

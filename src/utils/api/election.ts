@@ -19,7 +19,7 @@ const listByType = async () => {
     return result?.data.data
 }
 
-const show = async (id: string | undefined) => {
+const show = async (id: string) => {
     const result = await axios.get(`/api/elections/${id}`).catch((error) => {
         toast.error('Něco se pokazilo')
     })
@@ -57,4 +57,19 @@ const update = (id: number, data: any) => {
         })
 }
 
-export default { list, listByType, show, store, update }
+const assignElectionParties = (id: number, data: any) => {
+    axios
+        .put(`/api/elections/${id}/assign-election-parties`, data)
+        .then((response) => {
+            toast.success('Politické strany byly úspěšně zapsány k volbám.')
+        })
+        .catch((error) => {
+            if (error.response.status === 422) {
+                toast.error(error.response.data.message)
+            } else {
+                toast.error('Něco se pokazilo')
+            }
+        })
+}
+
+export default { list, listByType, show, store, update, assignElectionParties }

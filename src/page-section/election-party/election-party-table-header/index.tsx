@@ -5,6 +5,7 @@ const ElectionPartyTableHeader = () => {
         <tr>
             <th>ID</th>
             <th>Název</th>
+            <th>Počet kandidátů</th>
             <th>Možnosti</th>
         </tr>
     )

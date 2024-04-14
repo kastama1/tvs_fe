@@ -5,10 +5,12 @@ import useAuth from '../../hooks/useAuth'
 import * as Yup from 'yup'
 import FormWrapper from '../../components/form'
 import Loading from '../../page-section/loading'
+import { useNavigate } from 'react-router-dom'
 
 const ElectionPartyCreate = () => {
     useTitle('Politické strany')
     const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const navigate = useNavigate()
 
     const inputs = [
         {
@@ -35,6 +37,8 @@ const ElectionPartyCreate = () => {
 
     const handleSubmit = async (data: any) => {
         api.store(data)
+
+        navigate('/election-parties')
     }
 
     if (isLoading || !user) {

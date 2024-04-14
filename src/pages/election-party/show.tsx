@@ -7,6 +7,9 @@ import { Link, useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import ElectionPartyModel from '../../utils/models/election-party.model'
 import Loading from '../../page-section/loading'
+import Table from '../../components/table'
+import CandidateTableHeader from '../../page-section/candidate/candidate-table-header'
+import CandidateTableRow from '../../page-section/candidate/candidate-table-row'
 
 const ElectionPartyShow = () => {
     useTitle('Politická strana')
@@ -17,19 +20,21 @@ const ElectionPartyShow = () => {
         id: 0,
         name: '',
         campaign: '',
+        candidates: null,
         createdAt: '',
         updatedAt: '',
     })
 
     useEffect(() => {
-        if (user) {
+        if (user && id) {
             api.show(id).then((data) => {
+                console.log(data)
                 setElectionParty(data)
             })
         }
-    }, [])
+    }, [user, id])
 
-    if ((isLoading || !user) && !electionParty) {
+    if ((isLoading || !user) && electionParty.id === 0) {
         return <Loading />
     }
 
@@ -42,6 +47,39 @@ const ElectionPartyShow = () => {
                 </Link>
             </div>
             <div>{parse(electionParty.campaign)}</div>
+
+            <h3>Kandidáti</h3>
+
+            <div>
+                <Link
+                    to={`/candidates/create?election-party=${electionParty.id}`}
+                >
+                    Přidat nového kandidáta
+                </Link>
+            </div>
+
+            {electionParty.candidates && (
+                <Table>
+                    <>
+                        <thead>
+                            <CandidateTableHeader />
+                        </thead>
+
+                        <tbody>
+                            {electionParty.candidates.map(
+                                (candidate, index) => {
+                                    return (
+                                        <CandidateTableRow
+                                            candidate={candidate}
+                                            key={index}
+                                        />
+                                    )
+                                }
+                            )}
+                        </tbody>
+                    </>
+                </Table>
+            )}
         </>
     )
 }

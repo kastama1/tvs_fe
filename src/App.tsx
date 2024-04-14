@@ -14,6 +14,11 @@ import ElectionParty from './pages/election-party/list'
 import ElectionPartyShow from './pages/election-party/show'
 import ElectionPartyCreate from './pages/election-party/create'
 import ElectionPartyEdit from './pages/election-party/edit'
+import ElectionAssignElectionParties from './pages/election/assign-election-parties'
+import Candidate from './pages/candidate/list'
+import CandidateShow from './pages/candidate/show'
+import CandidateCreate from './pages/candidate/create'
+import CandidateEdit from './pages/candidate/edit'
 
 function App(this: any) {
     moment.tz.setDefault('Europe/Prague')
@@ -36,6 +41,12 @@ function App(this: any) {
             element: <ElectionParty />,
             auth: true,
         },
+        {
+            name: 'Kandidáti',
+            path: '/candidates',
+            element: <Candidate />,
+            auth: true,
+        },
     ]
 
     const routes = [
@@ -52,6 +63,10 @@ function App(this: any) {
             element: <ElectionEdit />,
         },
         {
+            path: '/elections/:id/assign-election-parties',
+            element: <ElectionAssignElectionParties />,
+        },
+        {
             path: '/election-parties/:id',
             element: <ElectionPartyShow />,
         },
@@ -62,6 +77,18 @@ function App(this: any) {
         {
             path: '/election-parties/:id/edit',
             element: <ElectionPartyEdit />,
+        },
+        {
+            path: '/candidates/:id',
+            element: <CandidateShow />,
+        },
+        {
+            path: '/candidates/create',
+            element: <CandidateCreate />,
+        },
+        {
+            path: '/candidates/:id/edit',
+            element: <CandidateEdit />,
         },
         {
             path: '/login',
