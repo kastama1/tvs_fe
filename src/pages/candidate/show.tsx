@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import Loading from '../../page-section/loading'
 import CandidateModel from '../../utils/models/candidate.model'
-import './index.scss'
+import './show.scss'
 
 const CandidateShow = () => {
     useTitle('Kandidát')
@@ -47,7 +47,7 @@ const CandidateShow = () => {
                     <img src={candidate.images[0].url} alt={candidate.name} />
                 )}
 
-                {parse(candidate.campaign)}
+                <p>{parse(candidate.campaign)}</p>
             </div>
         </>
     )

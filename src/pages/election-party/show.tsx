@@ -10,6 +10,7 @@ import Loading from '../../page-section/loading'
 import Table from '../../components/table'
 import CandidateTableHeader from '../../page-section/candidate/candidate-table-header'
 import CandidateTableRow from '../../page-section/candidate/candidate-table-row'
+import './show.scss'
 
 const ElectionPartyShow = () => {
     useTitle('Politická strana')
@@ -20,6 +21,7 @@ const ElectionPartyShow = () => {
         id: 0,
         name: '',
         campaign: '',
+        images: [],
         candidates: null,
         createdAt: '',
         updatedAt: '',
@@ -46,7 +48,16 @@ const ElectionPartyShow = () => {
                     Upravit
                 </Link>
             </div>
-            <div>{parse(electionParty.campaign)}</div>
+            <div className="image-text-container">
+                {electionParty.images.length > 0 && (
+                    <img
+                        src={electionParty.images[0].url}
+                        alt={electionParty.name}
+                    />
+                )}
+
+                <p>{parse(electionParty.campaign)}</p>
+            </div>
 
             <h3>Kandidáti</h3>
 

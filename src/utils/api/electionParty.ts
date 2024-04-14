@@ -1,5 +1,6 @@
 import axios from '../axios'
 import { toast } from 'react-toastify'
+import FileWithPreview from '../models/file-with-preview.model'
 
 const list = async () => {
     const result = await axios.get(`/api/election-parties`).catch((error) => {
@@ -21,7 +22,9 @@ const show = async (id: string) => {
 
 const store = (data: any) => {
     axios
-        .post(`/api/election-parties`, data)
+        .post(`/api/election-parties`, data, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        })
         .then((response) => {
             toast.success('Politická strana byla přidána úspěšně.')
         })
@@ -35,8 +38,20 @@ const store = (data: any) => {
 }
 
 const update = (id: number, data: any) => {
+    const formData = new FormData()
+
+    formData.append('_method', 'PUT')
+    formData.append('name', data['name'])
+    formData.append('campaign', data['campaign'])
+
+    data.images.map((image: FileWithPreview) => {
+        formData.append('images[]', image)
+    })
+
     axios
-        .put(`/api/election-parties/${id}`, data)
+        .post(`/api/election-parties/${id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        })
         .then((response) => {
             toast.success('Politická strana byla úspěšně upravena.')
         })

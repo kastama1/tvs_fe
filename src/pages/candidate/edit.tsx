@@ -100,11 +100,9 @@ const CandidateEdit = () => {
     })
 
     const handleSubmit = async (data: any) => {
-        console.log(data)
-
         api.update(candidate.id, data)
 
-        //navigate('/candidates')
+        navigate('/candidates')
     }
 
     if ((isLoading || !user) && candidate.id === 0) {

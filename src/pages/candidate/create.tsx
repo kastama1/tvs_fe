@@ -79,8 +79,6 @@ const CandidateCreate = () => {
     })
 
     const handleSubmit = async (data: any) => {
-        console.log(data)
-
         api.store(data)
 
         navigate('/candidates')

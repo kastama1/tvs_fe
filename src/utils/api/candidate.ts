@@ -27,7 +27,6 @@ const store = (data: any) => {
             toast.success('Kandidát byl přidán úspěšně.')
         })
         .catch((error) => {
-            console.log(error)
             if (error.response.status === 422) {
                 toast.error(error.response.data.message)
             } else {
@@ -56,7 +55,6 @@ const update = (id: number, data: any) => {
             toast.success('Kandidát byl úspěšně upraven.')
         })
         .catch((error) => {
-            console.log(error)
             if (error.response.status === 422) {
                 toast.error(error.response.data.message)
             } else {

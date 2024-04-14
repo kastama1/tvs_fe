@@ -19,6 +19,7 @@ const ElectionPartyEdit = () => {
         id: 0,
         name: '',
         campaign: '',
+        images: [],
         candidates: null,
         createdAt: '',
         updatedAt: '',
@@ -43,16 +44,24 @@ const ElectionPartyEdit = () => {
             name: 'campaign',
             type: 'texteditor',
         },
+        {
+            label: 'Obrázek',
+            name: 'images',
+            type: 'files',
+            initialFiles: electionParty.images,
+        },
     ]
 
     const initialValues = {
         name: electionParty.name,
         campaign: electionParty.campaign,
+        images: [],
     }
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Toto pole je povinné'),
         campaign: Yup.string(),
+        images: Yup.array().max(5, 'Toto pole může mít maximálně 5 prvků'),
     })
 
     const handleSubmit = async (data: any) => {
