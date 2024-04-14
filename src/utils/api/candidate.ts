@@ -1,10 +1,10 @@
-import axios from '../axios'
+import { axios, getErrorMessage } from '../axios'
 import { toast } from 'react-toastify'
 import FileWithPreview from '../models/file-with-preview.model'
 
 const list = async () => {
     const result = await axios.get(`/api/candidates`).catch((error) => {
-        toast.error('Něco se pokazilo')
+        getErrorMessage(error)
     })
 
     return result?.data.data
@@ -12,7 +12,7 @@ const list = async () => {
 
 const show = async (id: string) => {
     const result = await axios.get(`/api/candidates/${id}`).catch((error) => {
-        toast.error('Něco se pokazilo')
+        getErrorMessage(error)
     })
 
     return result?.data.data
@@ -27,11 +27,7 @@ const store = (data: any) => {
             toast.success('Kandidát byl přidán úspěšně.')
         })
         .catch((error) => {
-            if (error.response.status === 422) {
-                toast.error(error.response.data.message)
-            } else {
-                toast.error('Něco se pokazilo')
-            }
+            getErrorMessage(error)
         })
 }
 
@@ -55,11 +51,7 @@ const update = (id: number, data: any) => {
             toast.success('Kandidát byl úspěšně upraven.')
         })
         .catch((error) => {
-            if (error.response.status === 422) {
-                toast.error(error.response.data.message)
-            } else {
-                toast.error('Něco se pokazilo')
-            }
+            getErrorMessage(error)
         })
 }
 

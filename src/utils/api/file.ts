@@ -1,4 +1,4 @@
-import axios from '../axios'
+import { axios, getErrorMessage } from '../axios'
 import { toast } from 'react-toastify'
 
 const destroy = (id: number) => {
@@ -10,14 +10,7 @@ const destroy = (id: number) => {
             return true
         })
         .catch((error) => {
-            console.log(error)
-            if (error.response.status === 422) {
-                toast.error(error.response.data.message)
-            } else {
-                toast.error('Něco se pokazilo')
-            }
-
-            return false
+            getErrorMessage(error)
         })
 }
 

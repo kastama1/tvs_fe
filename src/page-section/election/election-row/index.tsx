@@ -10,7 +10,9 @@ interface electionRowProps {
 const ElectionRow: React.FC<electionRowProps> = ({ election }) => {
     return (
         <div className="election">
-            <Link to={`/elections/${election.id}`}>{election.name}</Link>
+            <Link to={`/administration/elections/${election.id}`}>
+                {election.name}
+            </Link>
             <div className="election-date">
                 <span>Datum konání:</span>
                 <span>{new Date(election.startFrom).toLocaleDateString()}</span>

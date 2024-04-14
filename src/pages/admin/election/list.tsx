@@ -1,18 +1,18 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/election'
-import useAuth from '../../hooks/useAuth'
+import api from '../../../utils/api/election'
+import useAuth from '../../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import ElectionModel from '../../utils/models/election.model'
-import Table from '../../components/table'
-import ElectionTableHeader from '../../page-section/election/election-table-header'
-import ElectionTableRow from '../../page-section/election/election-table-row'
-import Loading from '../../page-section/loading'
+import ElectionModel from '../../../utils/models/election.model'
+import Table from '../../../components/table'
+import ElectionTableHeader from '../../../page-section/election/election-table-header'
+import ElectionTableRow from '../../../page-section/election/election-table-row'
+import Loading from '../../../page-section/loading'
 
 const Election = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
 
     const [elections, setElections] = useState<ElectionModel[]>([])
 
@@ -33,7 +33,9 @@ const Election = () => {
             <Heading>Volby</Heading>
 
             <div>
-                <Link to={'/elections/create'}>Přidat nové volby</Link>
+                <Link to={'/administration/elections/create'}>
+                    Přidat nové volby
+                </Link>
             </div>
 
             <Table>

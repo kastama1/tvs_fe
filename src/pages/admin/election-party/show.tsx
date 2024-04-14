@@ -1,20 +1,20 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/electionParty'
-import useAuth from '../../hooks/useAuth'
+import api from '../../../utils/api/electionParty'
+import useAuth from '../../../hooks/useAuth'
 import { Link, useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
-import ElectionPartyModel from '../../utils/models/election-party.model'
-import Loading from '../../page-section/loading'
-import Table from '../../components/table'
-import CandidateTableHeader from '../../page-section/candidate/candidate-table-header'
-import CandidateTableRow from '../../page-section/candidate/candidate-table-row'
+import ElectionPartyModel from '../../../utils/models/election-party.model'
+import Loading from '../../../page-section/loading'
+import Table from '../../../components/table'
+import CandidateTableHeader from '../../../page-section/candidate/candidate-table-header'
+import CandidateTableRow from '../../../page-section/candidate/candidate-table-row'
 import './show.scss'
 
 const ElectionPartyShow = () => {
     useTitle('Politická strana')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
 
     const [electionParty, setElectionParty] = useState<ElectionPartyModel>({
@@ -44,7 +44,9 @@ const ElectionPartyShow = () => {
         <>
             <Heading>{electionParty.name}</Heading>
             <div>
-                <Link to={`/election-parties/${electionParty.id}/edit`}>
+                <Link
+                    to={`/administration/election-parties/${electionParty.id}/edit`}
+                >
                     Upravit
                 </Link>
             </div>
@@ -63,7 +65,7 @@ const ElectionPartyShow = () => {
 
             <div>
                 <Link
-                    to={`/candidates/create?election-party=${electionParty.id}`}
+                    to={`/administration/candidates/create?election-party=${electionParty.id}`}
                 >
                     Přidat nového kandidáta
                 </Link>

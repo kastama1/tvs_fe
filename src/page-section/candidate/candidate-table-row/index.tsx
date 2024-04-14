@@ -10,12 +10,14 @@ const CandidateTableRow: React.FC<candidateTableRowProps> = ({ candidate }) => {
         <tr>
             <td>{candidate.id}</td>
             <td>
-                <Link to={`/candidates/${candidate.id}`}>{candidate.name}</Link>
+                <Link to={`/administration/candidates/${candidate.id}`}>
+                    {candidate.name}
+                </Link>
             </td>
             <td>
                 {candidate.electionParty ? (
                     <Link
-                        to={`/election-parties/${candidate.electionParty.id}`}
+                        to={`/administration/election-parties/${candidate.electionParty.id}`}
                     >
                         {candidate.electionParty.name}
                     </Link>
@@ -25,10 +27,16 @@ const CandidateTableRow: React.FC<candidateTableRowProps> = ({ candidate }) => {
             </td>
             <td>
                 <div>
-                    <Link to={`/candidates/${candidate.id}`}>Zobrazit</Link>
+                    <Link to={`/administration/candidates/${candidate.id}`}>
+                        Zobrazit
+                    </Link>
                 </div>
                 <div>
-                    <Link to={`/candidates/${candidate.id}/edit`}>Upravit</Link>
+                    <Link
+                        to={`/administration/candidates/${candidate.id}/edit`}
+                    >
+                        Upravit
+                    </Link>
                 </div>
             </td>
         </tr>

@@ -1,19 +1,19 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
-import useAuth from '../../hooks/useAuth'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
+import useAuth from '../../../hooks/useAuth'
 import * as Yup from 'yup'
-import FormWrapper from '../../components/form'
-import Loading from '../../page-section/loading'
+import FormWrapper from '../../../components/form'
+import Loading from '../../../page-section/loading'
 import { useEffect, useState } from 'react'
-import apiElectionParty from '../../utils/api/electionParty'
-import apiElection from '../../utils/api/election'
-import ElectionPartyModel from '../../utils/models/election-party.model'
+import apiElectionParty from '../../../utils/api/electionParty'
+import apiElection from '../../../utils/api/election'
+import ElectionPartyModel from '../../../utils/models/election-party.model'
 import { useParams } from 'react-router-dom'
-import ElectionModel from '../../utils/models/election.model'
+import ElectionModel from '../../../utils/models/election.model'
 
 const ElectionAssignElectionParties = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
 
     const [election, setElection] = useState<ElectionModel>({

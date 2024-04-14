@@ -10,6 +10,7 @@ interface headerProps {
         path: string
         element: JSX.Element
         auth?: boolean
+        role?: string
     }[]
 }
 const Header: React.FC<headerProps> = ({ routes }) => {
@@ -20,7 +21,10 @@ const Header: React.FC<headerProps> = ({ routes }) => {
         const links: React.SetStateAction<any[]> = []
 
         routes.map((route, index) => {
-            if ((user && route.auth) || !route.auth) {
+            if (
+                (user && route.auth && route.role === user.role) ||
+                !route.auth
+            ) {
                 const link = (
                     <Fragment key={index}>
                         <NavLink

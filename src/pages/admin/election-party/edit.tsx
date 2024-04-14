@@ -1,17 +1,17 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/electionParty'
-import useAuth from '../../hooks/useAuth'
+import api from '../../../utils/api/electionParty'
+import useAuth from '../../../hooks/useAuth'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
-import FormWrapper from '../../components/form'
-import ElectionPartyModel from '../../utils/models/election-party.model'
-import Loading from '../../page-section/loading'
+import FormWrapper from '../../../components/form'
+import ElectionPartyModel from '../../../utils/models/election-party.model'
+import Loading from '../../../page-section/loading'
 
 const ElectionPartyEdit = () => {
     useTitle('Politické strany')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -67,7 +67,7 @@ const ElectionPartyEdit = () => {
     const handleSubmit = async (data: any) => {
         api.update(electionParty.id, data)
 
-        navigate('/election-parties')
+        navigate('/administration/election-parties')
     }
 
     if ((isLoading || !user) && electionParty.id === 0) {

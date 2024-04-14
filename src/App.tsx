@@ -6,19 +6,19 @@ import PageWrapper from './components/page-wrapper'
 import Registration from './pages/registration'
 import { ToastContainer } from 'react-toastify'
 import moment from 'moment-timezone'
-import Election from './pages/election/list'
-import ElectionShow from './pages/election/show'
-import ElectionCreate from './pages/election/create'
-import ElectionEdit from './pages/election/edit'
-import ElectionParty from './pages/election-party/list'
-import ElectionPartyShow from './pages/election-party/show'
-import ElectionPartyCreate from './pages/election-party/create'
-import ElectionPartyEdit from './pages/election-party/edit'
-import ElectionAssignElectionParties from './pages/election/assign-election-parties'
-import Candidate from './pages/candidate/list'
-import CandidateShow from './pages/candidate/show'
-import CandidateCreate from './pages/candidate/create'
-import CandidateEdit from './pages/candidate/edit'
+import Election from './pages/admin/election/list'
+import ElectionShow from './pages/admin/election/show'
+import ElectionCreate from './pages/admin/election/create'
+import ElectionEdit from './pages/admin/election/edit'
+import ElectionParty from './pages/admin/election-party/list'
+import ElectionPartyShow from './pages/admin/election-party/show'
+import ElectionPartyCreate from './pages/admin/election-party/create'
+import ElectionPartyEdit from './pages/admin/election-party/edit'
+import ElectionAssignElectionParties from './pages/admin/election/assign-election-parties'
+import Candidate from './pages/admin/candidate/list'
+import CandidateShow from './pages/admin/candidate/show'
+import CandidateCreate from './pages/admin/candidate/create'
+import CandidateEdit from './pages/admin/candidate/edit'
 
 function App(this: any) {
     moment.tz.setDefault('Europe/Prague')
@@ -31,63 +31,66 @@ function App(this: any) {
         },
         {
             name: 'Volby',
-            path: '/elections',
+            path: '/administration/elections',
             element: <Election />,
             auth: true,
+            role: 'admin',
         },
         {
             name: 'Politické strany',
-            path: '/election-parties',
+            path: '/administration/election-parties',
             element: <ElectionParty />,
             auth: true,
+            role: 'admin',
         },
         {
             name: 'Kandidáti',
-            path: '/candidates',
+            path: '/administration/candidates',
             element: <Candidate />,
             auth: true,
+            role: 'admin',
         },
     ]
 
     const routes = [
         {
-            path: '/elections/:id',
+            path: '/administration/elections/:id',
             element: <ElectionShow />,
         },
         {
-            path: '/elections/create',
+            path: '/administration/elections/create',
             element: <ElectionCreate />,
         },
         {
-            path: '/elections/:id/edit',
+            path: '/administration/elections/:id/edit',
             element: <ElectionEdit />,
         },
         {
-            path: '/elections/:id/assign-election-parties',
+            path: '/administration/elections/:id/assign-election-parties',
             element: <ElectionAssignElectionParties />,
         },
         {
-            path: '/election-parties/:id',
+            path: '/administration/election-parties/:id',
             element: <ElectionPartyShow />,
         },
         {
-            path: '/election-parties/create',
+            path: '/administration/election-parties/create',
             element: <ElectionPartyCreate />,
         },
         {
-            path: '/election-parties/:id/edit',
+            path: '/administration/election-parties/:id/edit',
             element: <ElectionPartyEdit />,
         },
         {
-            path: '/candidates/:id',
+            path: '/administration/candidates/:id',
             element: <CandidateShow />,
         },
         {
-            path: '/candidates/create',
+            path: '/administration/candidates/create',
             element: <CandidateCreate />,
         },
         {
-            path: '/candidates/:id/edit',
+            path: '/administration/candidates/:id/edit',
             element: <CandidateEdit />,
         },
         {

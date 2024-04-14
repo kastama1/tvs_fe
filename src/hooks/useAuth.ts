@@ -1,15 +1,16 @@
 import useSWR from 'swr'
-import axios from '../utils/axios'
+import { axios, getErrorMessage } from '../utils/axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 interface HookProps {
     middleware: any
+    role?: any
 }
 
 const useAuth = (props: HookProps) => {
-    const { middleware } = props
+    const { middleware, role = 'voter' } = props
 
     const navigate = useNavigate()
 
@@ -36,11 +37,7 @@ const useAuth = (props: HookProps) => {
                 mutate()
             })
             .catch((error) => {
-                if (error.response.status === 422) {
-                    toast.error('Špatně zadaný email nebo heslo.')
-                } else {
-                    toast.error('Něco se pokazilo')
-                }
+                getErrorMessage(error)
             })
     }
 
@@ -62,6 +59,7 @@ const useAuth = (props: HookProps) => {
         }
 
         if (middleware === 'auth' && !user && error) logout()
+        if (user && role !== user.role) navigate('/')
     }, [user, error, isLoading])
 
     return {

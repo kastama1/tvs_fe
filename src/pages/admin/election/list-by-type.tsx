@@ -1,16 +1,16 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/election'
-import useAuth from '../../hooks/useAuth'
-import ElectionList from '../../page-section/election/election-list'
-import ElectionsByType from '../../utils/models/election-by-type.model'
+import api from '../../../utils/api/election'
+import useAuth from '../../../hooks/useAuth'
+import ElectionList from '../../../page-section/election/election-list'
+import ElectionsByType from '../../../utils/models/election-by-type.model'
 import { Link } from 'react-router-dom'
-import Loading from '../../page-section/loading'
+import Loading from '../../../page-section/loading'
 
 const ElectionListByType = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
 
     const [electionsByType, setElectionsByType] = useState<ElectionsByType[]>(
         []
@@ -33,7 +33,9 @@ const ElectionListByType = () => {
             <Heading>Volby</Heading>
 
             <div>
-                <Link to={'/elections/create'}>Přidat nové volby</Link>
+                <Link to={'/administration/elections/create'}>
+                    Přidat nové volby
+                </Link>
             </div>
 
             {electionsByType && (

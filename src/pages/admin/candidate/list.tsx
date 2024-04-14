@@ -1,18 +1,18 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/candidate'
-import useAuth from '../../hooks/useAuth'
+import api from '../../../utils/api/candidate'
+import useAuth from '../../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import Table from '../../components/table'
-import Loading from '../../page-section/loading'
-import CandidateModel from '../../utils/models/candidate.model'
-import CandidateTableHeader from '../../page-section/candidate/candidate-table-header'
-import CandidateTableRow from '../../page-section/candidate/candidate-table-row'
+import Table from '../../../components/table'
+import Loading from '../../../page-section/loading'
+import CandidateModel from '../../../utils/models/candidate.model'
+import CandidateTableHeader from '../../../page-section/candidate/candidate-table-header'
+import CandidateTableRow from '../../../page-section/candidate/candidate-table-row'
 
 const Candidate = () => {
     useTitle('Kandidáti')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
 
     const [candidates, setCandidates] = useState<CandidateModel[]>([])
 
@@ -33,7 +33,9 @@ const Candidate = () => {
             <Heading>Kandidáti</Heading>
 
             <div>
-                <Link to={'/candidates/create'}>Přidat nového kandidáta</Link>
+                <Link to={'/administration/candidates/create'}>
+                    Přidat nového kandidáta
+                </Link>
             </div>
 
             <Table>

@@ -1,4 +1,4 @@
-import axios from '../axios'
+import { axios, getErrorMessage } from '../axios'
 import { toast } from 'react-toastify'
 
 const register = async (
@@ -18,11 +18,7 @@ const register = async (
             toast.success('Registrace proběhla úspěšně.')
         })
         .catch((error) => {
-            if (error.response.status === 422) {
-                toast.error('Účet s tímto emailem již existuje.')
-            } else {
-                toast.error('Něco se pokazilo')
-            }
+            getErrorMessage(error)
         })
 }
 

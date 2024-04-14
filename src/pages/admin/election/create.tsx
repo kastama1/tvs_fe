@@ -1,42 +1,18 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
-import { useEffect, useState } from 'react'
-import api from '../../utils/api/election'
-import useAuth from '../../hooks/useAuth'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
+import api from '../../../utils/api/election'
+import useAuth from '../../../hooks/useAuth'
 import * as Yup from 'yup'
-import FormWrapper from '../../components/form'
-import { ElectionTypeEnum } from '../../utils/enums/ElectionTypeEnum'
-import momentDefault from '../../utils/dateTimeZone'
-import Loading from '../../page-section/loading'
-import ElectionModel from '../../utils/models/election.model'
+import FormWrapper from '../../../components/form'
+import { ElectionTypeEnum } from '../../../utils/enums/ElectionTypeEnum'
+import momentDefault from '../../../utils/dateTimeZone'
+import Loading from '../../../page-section/loading'
+import { useNavigate } from 'react-router-dom'
 
-const ElectionEdit = () => {
+const ElectionCreate = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
-    const { id } = useParams()
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const navigate = useNavigate()
-
-    const [election, setElection] = useState<ElectionModel>({
-        id: 0,
-        name: '',
-        type: 'presidential_election',
-        info: '',
-        electionParties: [],
-        publishFrom: '',
-        startFrom: '',
-        endTo: '',
-        createdAt: '',
-        updatedAt: '',
-    })
-
-    useEffect(() => {
-        if (user && id) {
-            api.show(id).then((data) => {
-                setElection(data)
-            })
-        }
-    }, [user, id])
 
     const mapOptions = () => {
         return Object.entries(ElectionTypeEnum).map(([value, text]) => ({
@@ -80,12 +56,12 @@ const ElectionEdit = () => {
     ]
 
     const initialValues = {
-        name: election.name,
-        type: election.type,
-        info: election.info,
-        publish_from: momentDefault(election.publishFrom),
-        start_from: momentDefault(election.startFrom),
-        end_to: momentDefault(election.endTo),
+        name: '',
+        type: inputs?.[1]?.options?.[0].value ?? '',
+        info: '',
+        publish_from: momentDefault(),
+        start_from: momentDefault(),
+        end_to: momentDefault(),
     }
 
     const validationSchema = Yup.object().shape({
@@ -112,28 +88,28 @@ const ElectionEdit = () => {
     })
 
     const handleSubmit = async (data: any) => {
-        api.update(election.id, data)
+        api.store(data)
 
-        navigate('/elections')
+        // navigate('/administration/elections')
     }
 
-    if ((isLoading || !user) && election.id === 0) {
+    if (isLoading || !user) {
         return <Loading />
     }
 
     return (
         <>
-            <Heading>Upravit volby</Heading>
+            <Heading>Vytvořit nové volby</Heading>
 
             <FormWrapper
                 inputs={inputs}
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 handleSubmit={handleSubmit}
-                submitText={'Upravit volby'}
+                submitText={'Vytvořit volby'}
             />
         </>
     )
 }
 
-export default ElectionEdit
+export default ElectionCreate

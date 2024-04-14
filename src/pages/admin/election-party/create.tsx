@@ -1,15 +1,15 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
-import api from '../../utils/api/electionParty'
-import useAuth from '../../hooks/useAuth'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
+import api from '../../../utils/api/electionParty'
+import useAuth from '../../../hooks/useAuth'
 import * as Yup from 'yup'
-import FormWrapper from '../../components/form'
-import Loading from '../../page-section/loading'
+import FormWrapper from '../../../components/form'
+import Loading from '../../../page-section/loading'
 import { useNavigate } from 'react-router-dom'
 
 const ElectionPartyCreate = () => {
     useTitle('Politické strany')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const navigate = useNavigate()
 
     const inputs = [
@@ -45,7 +45,7 @@ const ElectionPartyCreate = () => {
     const handleSubmit = async (data: any) => {
         api.store(data)
 
-        navigate('/election-parties')
+        navigate('/administration/election-parties')
     }
 
     if (isLoading || !user) {

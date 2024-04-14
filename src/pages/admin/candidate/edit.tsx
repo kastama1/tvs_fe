@@ -1,21 +1,31 @@
-import { useTitle } from '../../hooks/useTitle'
-import Heading from '../../components/heading'
-import useAuth from '../../hooks/useAuth'
-import * as Yup from 'yup'
-import FormWrapper from '../../components/form'
-import Loading from '../../page-section/loading'
-import api from '../../utils/api/candidate'
-import apiElectionParties from '../../utils/api/electionParty'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useTitle } from '../../../hooks/useTitle'
+import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
-import ElectionPartyModel from '../../utils/models/election-party.model'
+import api from '../../../utils/api/candidate'
+import useAuth from '../../../hooks/useAuth'
+import { useNavigate, useParams } from 'react-router-dom'
+import * as Yup from 'yup'
+import FormWrapper from '../../../components/form'
+import Loading from '../../../page-section/loading'
+import CandidateModel from '../../../utils/models/candidate.model'
+import ElectionPartyModel from '../../../utils/models/election-party.model'
+import apiElectionParties from '../../../utils/api/electionParty'
 
-const CandidateCreate = () => {
+const CandidateEdit = () => {
     useTitle('Politické strany')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
+    const { id } = useParams()
     const navigate = useNavigate()
-    const [queryParameters] = useSearchParams()
 
+    const [candidate, setCandidate] = useState<CandidateModel>({
+        id: 0,
+        name: '',
+        campaign: '',
+        images: [],
+        electionParty: undefined,
+        createdAt: '',
+        updatedAt: '',
+    })
     const [electionParties, setElectionParties] = useState<
         ElectionPartyModel[]
     >([])
@@ -25,6 +35,14 @@ const CandidateCreate = () => {
             setElectionParties(data)
         })
     }, [])
+
+    useEffect(() => {
+        if (user && id) {
+            api.show(id).then((data) => {
+                setCandidate(data)
+            })
+        }
+    }, [user, id])
 
     const mapOptions = (parties: ElectionPartyModel[]) => {
         const options: { value: string; text: string }[] = []
@@ -61,13 +79,16 @@ const CandidateCreate = () => {
             label: 'Obrázek',
             name: 'images',
             type: 'files',
+            initialFiles: candidate.images,
         },
     ]
 
     const initialValues = {
-        name: '',
-        campaign: '',
-        election_party_id: queryParameters.get('election-party') ?? '',
+        name: candidate.name,
+        campaign: candidate.campaign,
+        election_party_id: candidate.electionParty
+            ? candidate.electionParty.id
+            : '',
         images: [],
     }
 
@@ -79,28 +100,28 @@ const CandidateCreate = () => {
     })
 
     const handleSubmit = async (data: any) => {
-        api.store(data)
+        api.update(candidate.id, data)
 
-        navigate('/candidates')
+        navigate('/administration/candidates')
     }
 
-    if (isLoading || !user) {
+    if ((isLoading || !user) && candidate.id === 0) {
         return <Loading />
     }
 
     return (
         <>
-            <Heading>Vytvořit nového kandidáta</Heading>
+            <Heading>Upravit politickou stranu</Heading>
 
             <FormWrapper
                 inputs={inputs}
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 handleSubmit={handleSubmit}
-                submitText={'Vytvořit nového kandidáta'}
+                submitText={'Upravit politickou stranu'}
             />
         </>
     )
 }
 
-export default CandidateCreate
+export default CandidateEdit

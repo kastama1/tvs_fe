@@ -12,19 +12,25 @@ const ElectionPartyTableRow: React.FC<electionPartyTableRowProps> = ({
         <tr>
             <td>{electionParty.id}</td>
             <td>
-                <Link to={`/election-parties/${electionParty.id}`}>
+                <Link
+                    to={`/administration/election-parties/${electionParty.id}`}
+                >
                     {electionParty.name}
                 </Link>
             </td>
             <td>{electionParty.candidates?.length}</td>
             <td>
                 <div>
-                    <Link to={`/election-parties/${electionParty.id}`}>
+                    <Link
+                        to={`/administration/election-parties/${electionParty.id}`}
+                    >
                         Zobrazit
                     </Link>
                 </div>
                 <div>
-                    <Link to={`/election-parties/${electionParty.id}/edit`}>
+                    <Link
+                        to={`/administration/election-parties/${electionParty.id}/edit`}
+                    >
                         Upravit
                     </Link>
                 </div>
