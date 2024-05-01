@@ -5,7 +5,6 @@ const list = async () => {
     const result = await axios.get(`/api/elections`).catch((error) => {
         getErrorMessage(error)
     })
-
     return result?.data.data
 }
 
@@ -61,4 +60,33 @@ const assignElectionParties = (id: number, data: any) => {
         })
 }
 
-export default { list, listByType, show, store, update, assignElectionParties }
+const getVote = async (id: string) => {
+    const result = await axios
+        .get(`/api/elections/${id}/vote`)
+        .catch((error) => {
+            getErrorMessage(error)
+        })
+
+    return result?.data.data
+}
+const vote = (id: string, data: any) => {
+    axios
+        .post(`/api/elections/${id}/vote`, data)
+        .then((response) => {
+            toast.success('Hlasování proběhlo v pořádku')
+        })
+        .catch((error) => {
+            getErrorMessage(error)
+        })
+}
+
+export default {
+    list,
+    listByType,
+    show,
+    store,
+    update,
+    assignElectionParties,
+    getVote,
+    vote,
+}

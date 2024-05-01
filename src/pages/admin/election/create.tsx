@@ -90,7 +90,7 @@ const ElectionCreate = () => {
     const handleSubmit = async (data: any) => {
         api.store(data)
 
-        // navigate('/administration/elections')
+        navigate('/administration/elections')
     }
 
     if (isLoading || !user) {

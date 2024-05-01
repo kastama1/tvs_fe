@@ -1,0 +1,19 @@
+.election-voting-box h3 {
+  color: var(--color-red);
+}
+.election-voting-box button {
+  width: 100%;
+  font-size: var(--font-size);
+  font-weight: 600;
+  color: var(--color-white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-normal);
+  box-shadow: var(--box-shadow);
+  background-color: var(--color-blue);
+}
+.election-voting-box button:hover {
+  background-color: var(--color-blue-darken);
+}
+
+/*# sourceMappingURL=index.css.map */

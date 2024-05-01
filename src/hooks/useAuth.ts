@@ -33,8 +33,8 @@ const useAuth = (props: HookProps) => {
             .post('/api/login', { email, password })
             .then(() => {
                 toast.success('Přihlášení proběhlo úspěšně.')
-                navigate('/')
                 mutate()
+                navigate('/')
             })
             .catch((error) => {
                 getErrorMessage(error)
@@ -47,14 +47,14 @@ const useAuth = (props: HookProps) => {
 
             toast.success('Odhlášení proběhlo úspěšně.')
 
-            await mutate(undefined)
+            mutate(undefined)
         }
 
-        navigate('/')
+        navigate('/login')
     }
 
     useEffect(() => {
-        if (user) {
+        if (user || error) {
             setIsLoading(false)
         }
 

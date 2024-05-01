@@ -1,0 +1,22 @@
+.election-container {
+  border: 1px solid var(--color-black);
+  border-radius: var(--border-radius-normal);
+  box-shadow: var(--box-shadow);
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-bottom: 20px;
+}
+.election-container h3 {
+  color: var(--color-red);
+}
+.election-container li {
+  margin: 5px 0;
+}
+.election-container li a {
+  color: var(--color-black);
+}
+.election-container li a:hover {
+  color: var(--color-red);
+}
+
+/*# sourceMappingURL=index.css.map */

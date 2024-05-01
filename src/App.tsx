@@ -6,19 +6,22 @@ import PageWrapper from './components/page-wrapper'
 import Registration from './pages/registration'
 import { ToastContainer } from 'react-toastify'
 import moment from 'moment-timezone'
-import Election from './pages/admin/election/list'
-import ElectionShow from './pages/admin/election/show'
-import ElectionCreate from './pages/admin/election/create'
-import ElectionEdit from './pages/admin/election/edit'
-import ElectionParty from './pages/admin/election-party/list'
-import ElectionPartyShow from './pages/admin/election-party/show'
-import ElectionPartyCreate from './pages/admin/election-party/create'
-import ElectionPartyEdit from './pages/admin/election-party/edit'
-import ElectionAssignElectionParties from './pages/admin/election/assign-election-parties'
-import Candidate from './pages/admin/candidate/list'
-import CandidateShow from './pages/admin/candidate/show'
-import CandidateCreate from './pages/admin/candidate/create'
-import CandidateEdit from './pages/admin/candidate/edit'
+import AdminElection from './pages/admin/election/list'
+import AdminElectionShow from './pages/admin/election/show'
+import AdminElectionCreate from './pages/admin/election/create'
+import AdminElectionEdit from './pages/admin/election/edit'
+import AdminElectionParty from './pages/admin/election-party/list'
+import AdminElectionPartyShow from './pages/admin/election-party/show'
+import AdminElectionPartyCreate from './pages/admin/election-party/create'
+import AdminElectionPartyEdit from './pages/admin/election-party/edit'
+import AdminElectionAssignElectionParties from './pages/admin/election/assign-election-parties'
+import AdminCandidate from './pages/admin/candidate/list'
+import AdminCandidateShow from './pages/admin/candidate/show'
+import AdminCandidateCreate from './pages/admin/candidate/create'
+import AdminCandidateEdit from './pages/admin/candidate/edit'
+import Election from './pages/election/list'
+import ElectionShow from './pages/election/show'
+import ElectionVoting from './pages/election/voting'
 
 function App(this: any) {
     moment.tz.setDefault('Europe/Prague')
@@ -32,21 +35,28 @@ function App(this: any) {
         {
             name: 'Volby',
             path: '/administration/elections',
-            element: <Election />,
+            element: <AdminElection />,
             auth: true,
             role: 'admin',
         },
         {
+            name: 'Volby',
+            path: '/elections',
+            element: <Election />,
+            auth: true,
+            role: 'voter',
+        },
+        {
             name: 'Politické strany',
             path: '/administration/election-parties',
-            element: <ElectionParty />,
+            element: <AdminElectionParty />,
             auth: true,
             role: 'admin',
         },
         {
             name: 'Kandidáti',
             path: '/administration/candidates',
-            element: <Candidate />,
+            element: <AdminCandidate />,
             auth: true,
             role: 'admin',
         },
@@ -55,43 +65,51 @@ function App(this: any) {
     const routes = [
         {
             path: '/administration/elections/:id',
-            element: <ElectionShow />,
+            element: <AdminElectionShow />,
         },
         {
             path: '/administration/elections/create',
-            element: <ElectionCreate />,
+            element: <AdminElectionCreate />,
         },
         {
             path: '/administration/elections/:id/edit',
-            element: <ElectionEdit />,
+            element: <AdminElectionEdit />,
         },
         {
             path: '/administration/elections/:id/assign-election-parties',
-            element: <ElectionAssignElectionParties />,
+            element: <AdminElectionAssignElectionParties />,
         },
         {
             path: '/administration/election-parties/:id',
-            element: <ElectionPartyShow />,
+            element: <AdminElectionPartyShow />,
         },
         {
             path: '/administration/election-parties/create',
-            element: <ElectionPartyCreate />,
+            element: <AdminElectionPartyCreate />,
         },
         {
             path: '/administration/election-parties/:id/edit',
-            element: <ElectionPartyEdit />,
+            element: <AdminElectionPartyEdit />,
         },
         {
             path: '/administration/candidates/:id',
-            element: <CandidateShow />,
+            element: <AdminCandidateShow />,
         },
         {
             path: '/administration/candidates/create',
-            element: <CandidateCreate />,
+            element: <AdminCandidateCreate />,
         },
         {
             path: '/administration/candidates/:id/edit',
-            element: <CandidateEdit />,
+            element: <AdminCandidateEdit />,
+        },
+        {
+            path: '/elections/:id',
+            element: <ElectionShow />,
+        },
+        {
+            path: '/elections/:id/voting',
+            element: <ElectionVoting />,
         },
         {
             path: '/login',
