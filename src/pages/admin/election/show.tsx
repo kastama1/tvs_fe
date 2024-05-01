@@ -3,28 +3,19 @@ import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../../utils/api/election'
 import useAuth from '../../../hooks/useAuth'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import ElectionModel from '../../../utils/models/election.model'
 import Loading from '../../../page-section/loading'
+import ButtonLink from '../../../components/button-link'
+import './show.scss'
 
 const ElectionShow = () => {
     useTitle('Volby')
     const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
 
-    const [election, setElection] = useState<ElectionModel>({
-        id: 0,
-        name: '',
-        type: 'presidential_election',
-        info: '',
-        electionParties: [],
-        publishFrom: '',
-        startFrom: '',
-        endTo: '',
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [election, setElection] = useState<ElectionModel | null>(null)
 
     useEffect(() => {
         if (user && id) {
@@ -34,26 +25,22 @@ const ElectionShow = () => {
         }
     }, [user, id])
 
-    if ((isLoading || !user) && election.id) {
+    if (isLoading || !user || !election) {
         return <Loading />
     }
 
     return (
         <>
             <Heading>{election.name}</Heading>
-            <div>
-                <Link to={`/administration/elections/${election.id}/edit`}>
-                    Upravit
-                </Link>
-            </div>
-            <div>
-                <Link
-                    to={`/administration/elections/${election.id}/assign-election-parties`}
-                >
-                    Přidat politické strany
-                </Link>
-            </div>
-            <div>{parse(election.info)}</div>
+            <ButtonLink to={`/administration/elections/${election.id}/edit`}>
+                Upravit
+            </ButtonLink>
+            <ButtonLink
+                to={`/administration/elections/${election.id}/assign-election-parties`}
+            >
+                Přidat politické strany
+            </ButtonLink>
+            <div className="text-container">{parse(election.info)}</div>
         </>
     )
 }

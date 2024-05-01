@@ -3,13 +3,14 @@
   width: 100%;
   font-size: var(--font-size);
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-white) !important;
   padding: 10px 20px;
   border: none;
   border-radius: var(--border-radius-normal);
   box-shadow: var(--box-shadow);
   background-color: var(--color-blue);
   text-align: center;
+  margin-top: 10px;
 }
 .button-link:hover {
   background-color: var(--color-blue-darken);

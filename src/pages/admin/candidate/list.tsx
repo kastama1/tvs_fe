@@ -3,12 +3,12 @@ import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../../utils/api/candidate'
 import useAuth from '../../../hooks/useAuth'
-import { Link } from 'react-router-dom'
 import Table from '../../../components/table'
 import Loading from '../../../page-section/loading'
 import CandidateModel from '../../../utils/models/candidate.model'
 import CandidateTableHeader from '../../../page-section/candidate/candidate-table-header'
 import CandidateTableRow from '../../../page-section/candidate/candidate-table-row'
+import ButtonLink from '../../../components/button-link'
 
 const Candidate = () => {
     useTitle('Kandidáti')
@@ -24,7 +24,7 @@ const Candidate = () => {
         }
     }, [user])
 
-    if ((isLoading || !user) && candidates.length === 0) {
+    if (isLoading || !user) {
         return <Loading />
     }
 
@@ -32,30 +32,30 @@ const Candidate = () => {
         <>
             <Heading>Kandidáti</Heading>
 
-            <div>
-                <Link to={'/administration/candidates/create'}>
-                    Přidat nového kandidáta
-                </Link>
-            </div>
+            <ButtonLink to={'/administration/candidates/create'}>
+                Přidat nového kandidáta
+            </ButtonLink>
 
-            <Table>
-                <>
-                    <thead>
-                        <CandidateTableHeader />
-                    </thead>
+            {candidates.length > 0 && (
+                <Table>
+                    <>
+                        <thead>
+                            <CandidateTableHeader />
+                        </thead>
 
-                    <tbody>
-                        {candidates.map((candidate, index) => {
-                            return (
-                                <CandidateTableRow
-                                    candidate={candidate}
-                                    key={index}
-                                />
-                            )
-                        })}
-                    </tbody>
-                </>
-            </Table>
+                        <tbody>
+                            {candidates.map((candidate, index) => {
+                                return (
+                                    <CandidateTableRow
+                                        candidate={candidate}
+                                        key={index}
+                                    />
+                                )
+                            })}
+                        </tbody>
+                    </>
+                </Table>
+            )}
         </>
     )
 }

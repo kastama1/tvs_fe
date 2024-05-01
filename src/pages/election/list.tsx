@@ -22,7 +22,7 @@ const Election = () => {
         }
     }, [user])
 
-    if ((isLoading || !user) && elections.length === 0) {
+    if (isLoading || !user) {
         return <Loading />
     }
 
@@ -30,23 +30,27 @@ const Election = () => {
         <>
             <Heading>Volby</Heading>
 
-            <>
-                {Object.keys(ElectionTypeEnum).map((electionType, index) => {
-                    const electionsOfType = elections.filter(
-                        (election) => election.type === electionType
-                    )
+            {elections.length > 0 && (
+                <>
+                    {Object.keys(ElectionTypeEnum).map(
+                        (electionType, index) => {
+                            const electionsOfType = elections.filter(
+                                (election) => election.type === electionType
+                            )
 
-                    if (electionsOfType.length > 0) {
-                        return (
-                            <ElectionBox
-                                electionsOfType={electionsOfType}
-                                electionType={electionType}
-                                key={index}
-                            />
-                        )
-                    }
-                })}
-            </>
+                            if (electionsOfType.length > 0) {
+                                return (
+                                    <ElectionBox
+                                        electionsOfType={electionsOfType}
+                                        electionType={electionType}
+                                        key={index}
+                                    />
+                                )
+                            }
+                        }
+                    )}
+                </>
+            )}
         </>
     )
 }

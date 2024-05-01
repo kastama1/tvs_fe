@@ -15,15 +15,8 @@ const ElectionPartyEdit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const [electionParty, setElectionParty] = useState<ElectionPartyModel>({
-        id: 0,
-        name: '',
-        campaign: '',
-        images: [],
-        candidates: null,
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [electionParty, setElectionParty] =
+        useState<ElectionPartyModel | null>(null)
 
     useEffect(() => {
         if (user && id) {
@@ -32,6 +25,10 @@ const ElectionPartyEdit = () => {
             })
         }
     }, [user, id])
+
+    if (isLoading || !user || !electionParty) {
+        return <Loading />
+    }
 
     const inputs = [
         {
@@ -68,10 +65,6 @@ const ElectionPartyEdit = () => {
         api.update(electionParty.id, data)
 
         navigate('/administration/election-parties')
-    }
-
-    if ((isLoading || !user) && electionParty.id === 0) {
-        return <Loading />
     }
 
     return (

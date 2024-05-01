@@ -16,22 +16,23 @@ const ElectionAssignElectionParties = () => {
     const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
 
-    const [election, setElection] = useState<ElectionModel>({
-        id: 0,
-        name: '',
-        type: 'presidential_election',
-        info: '',
-        electionParties: [],
-        publishFrom: '',
-        startFrom: '',
-        endTo: '',
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [election, setElection] = useState<ElectionModel | null>(null)
 
     const [electionParties, setElectionParties] = useState<
         ElectionPartyModel[]
     >([])
+
+    useEffect(() => {
+        if (user && id) {
+            apiElection.show(id).then((data) => {
+                setElection(data)
+            })
+
+            apiElectionParty.list().then((data) => {
+                setElectionParties(data)
+            })
+        }
+    }, [user, id])
 
     const mapOptions = (parties: ElectionPartyModel[]) => {
         const options: { value: string; text: string }[] = []
@@ -54,6 +55,10 @@ const ElectionAssignElectionParties = () => {
         },
     ]
 
+    if (isLoading || !user || !election) {
+        return <Loading />
+    }
+
     const initialValues = {
         election_parties: election.electionParties.map((election) =>
             election.id.toString()
@@ -62,26 +67,10 @@ const ElectionAssignElectionParties = () => {
 
     const validationSchema = Yup.object().shape({})
 
-    useEffect(() => {
-        if (user && id) {
-            apiElection.show(id).then((data) => {
-                setElection(data)
-            })
-
-            apiElectionParty.list().then((data) => {
-                setElectionParties(data)
-            })
-        }
-    }, [user, id])
-
     const handleSubmit = async (data: any) => {
         if (election.id !== 0) {
             apiElection.assignElectionParties(election.id, data)
         }
-    }
-
-    if (isLoading || !user) {
-        return <Loading />
     }
 
     return (

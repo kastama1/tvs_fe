@@ -3,12 +3,12 @@ import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../../utils/api/election'
 import useAuth from '../../../hooks/useAuth'
-import { Link } from 'react-router-dom'
 import ElectionModel from '../../../utils/models/election.model'
 import Table from '../../../components/table'
 import ElectionTableHeader from '../../../page-section/election/election-table-header'
 import ElectionTableRow from '../../../page-section/election/election-table-row'
 import Loading from '../../../page-section/loading'
+import ButtonLink from '../../../components/button-link'
 
 const Election = () => {
     useTitle('Volby')
@@ -24,7 +24,7 @@ const Election = () => {
         }
     }, [user])
 
-    if ((isLoading || !user) && elections.length === 0) {
+    if (isLoading || !user) {
         return <Loading />
     }
 
@@ -32,29 +32,29 @@ const Election = () => {
         <>
             <Heading>Volby</Heading>
 
-            <div>
-                <Link to={'/administration/elections/create'}>
-                    Přidat nové volby
-                </Link>
-            </div>
+            <ButtonLink to={'/administration/elections/create'}>
+                Přidat nové volby
+            </ButtonLink>
 
-            <Table>
-                <>
-                    <thead>
-                        <ElectionTableHeader />
-                    </thead>
-                    <tbody>
-                        {elections.map((election, index) => {
-                            return (
-                                <ElectionTableRow
-                                    election={election}
-                                    key={index}
-                                />
-                            )
-                        })}
-                    </tbody>
-                </>
-            </Table>
+            {elections.length > 0 && (
+                <Table>
+                    <>
+                        <thead>
+                            <ElectionTableHeader />
+                        </thead>
+                        <tbody>
+                            {elections.map((election, index) => {
+                                return (
+                                    <ElectionTableRow
+                                        election={election}
+                                        key={index}
+                                    />
+                                )
+                            })}
+                        </tbody>
+                    </>
+                </Table>
+            )}
         </>
     )
 }

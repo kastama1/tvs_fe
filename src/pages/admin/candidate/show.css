@@ -1,5 +1,7 @@
 .image-text-container {
   display: flex;
+  padding: 0 !important;
+  margin-top: 20px;
 }
 .image-text-container img {
   margin-right: 20px;

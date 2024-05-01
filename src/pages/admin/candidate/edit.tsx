@@ -17,15 +17,7 @@ const CandidateEdit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const [candidate, setCandidate] = useState<CandidateModel>({
-        id: 0,
-        name: '',
-        campaign: '',
-        images: [],
-        electionParty: undefined,
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [candidate, setCandidate] = useState<CandidateModel | null>(null)
     const [electionParties, setElectionParties] = useState<
         ElectionPartyModel[]
     >([])
@@ -56,6 +48,10 @@ const CandidateEdit = () => {
             options.push(option)
         })
         return options
+    }
+
+    if (isLoading || !user || !candidate) {
+        return <Loading />
     }
 
     const inputs = [
@@ -103,10 +99,6 @@ const CandidateEdit = () => {
         api.update(candidate.id, data)
 
         navigate('/administration/candidates')
-    }
-
-    if ((isLoading || !user) && candidate.id === 0) {
-        return <Loading />
     }
 
     return (

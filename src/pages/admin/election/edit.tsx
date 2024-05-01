@@ -17,18 +17,7 @@ const ElectionEdit = () => {
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const [election, setElection] = useState<ElectionModel>({
-        id: 0,
-        name: '',
-        type: 'presidential_election',
-        info: '',
-        electionParties: [],
-        publishFrom: '',
-        startFrom: '',
-        endTo: '',
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [election, setElection] = useState<ElectionModel | null>(null)
 
     useEffect(() => {
         if (user && id) {
@@ -79,6 +68,10 @@ const ElectionEdit = () => {
         },
     ]
 
+    if (isLoading || !user || !election) {
+        return <Loading />
+    }
+
     const initialValues = {
         name: election.name,
         type: election.type,
@@ -115,10 +108,6 @@ const ElectionEdit = () => {
         api.update(election.id, data)
 
         navigate('/administration/elections')
-    }
-
-    if ((isLoading || !user) && election.id === 0) {
-        return <Loading />
     }
 
     return (

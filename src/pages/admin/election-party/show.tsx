@@ -3,7 +3,7 @@ import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../../utils/api/electionParty'
 import useAuth from '../../../hooks/useAuth'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import ElectionPartyModel from '../../../utils/models/election-party.model'
 import Loading from '../../../page-section/loading'
@@ -11,21 +11,15 @@ import Table from '../../../components/table'
 import CandidateTableHeader from '../../../page-section/candidate/candidate-table-header'
 import CandidateTableRow from '../../../page-section/candidate/candidate-table-row'
 import './show.scss'
+import ButtonLink from '../../../components/button-link'
 
 const ElectionPartyShow = () => {
     useTitle('Politická strana')
     const { user, isLoading } = useAuth({ middleware: 'auth', role: 'admin' })
     const { id } = useParams()
 
-    const [electionParty, setElectionParty] = useState<ElectionPartyModel>({
-        id: 0,
-        name: '',
-        campaign: '',
-        images: [],
-        candidates: null,
-        createdAt: '',
-        updatedAt: '',
-    })
+    const [electionParty, setElectionParty] =
+        useState<ElectionPartyModel | null>(null)
 
     useEffect(() => {
         if (user && id) {
@@ -36,20 +30,18 @@ const ElectionPartyShow = () => {
         }
     }, [user, id])
 
-    if ((isLoading || !user) && electionParty.id === 0) {
+    if (isLoading || !user || !electionParty) {
         return <Loading />
     }
 
     return (
         <>
             <Heading>{electionParty.name}</Heading>
-            <div>
-                <Link
-                    to={`/administration/election-parties/${electionParty.id}/edit`}
-                >
-                    Upravit
-                </Link>
-            </div>
+            <ButtonLink
+                to={`/administration/election-parties/${electionParty.id}/edit`}
+            >
+                Upravit
+            </ButtonLink>
             <div className="image-text-container">
                 {electionParty.images.length > 0 && (
                     <img
@@ -63,13 +55,11 @@ const ElectionPartyShow = () => {
 
             <h3>Kandidáti</h3>
 
-            <div>
-                <Link
-                    to={`/administration/candidates/create?election-party=${electionParty.id}`}
-                >
-                    Přidat nového kandidáta
-                </Link>
-            </div>
+            <ButtonLink
+                to={`/administration/candidates/create?election-party=${electionParty.id}`}
+            >
+                Přidat nového kandidáta
+            </ButtonLink>
 
             {electionParty.candidates && (
                 <Table>
