@@ -23,7 +23,7 @@ const store = (data: any) => {
         .post(`/api/candidates`, data, {
             headers: { 'Content-Type': 'multipart/form-data' },
         })
-        .then((response) => {
+        .then(() => {
             toast.success('Kandidát byl přidán úspěšně.')
         })
         .catch((error) => {
@@ -39,7 +39,7 @@ const update = (id: number, data: any) => {
     formData.append('campaign', data['campaign'])
     formData.append('election_party_id', data['election_party_id'])
 
-    data.images.map((image: FileWithPreview) => {
+    data.images.forEach((image: FileWithPreview) => {
         formData.append('images[]', image)
     })
 
@@ -47,7 +47,7 @@ const update = (id: number, data: any) => {
         .post(`/api/candidates/${id}`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
         })
-        .then((response) => {
+        .then(() => {
             toast.success('Kandidát byl úspěšně upraven.')
         })
         .catch((error) => {

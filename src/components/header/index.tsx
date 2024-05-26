@@ -20,7 +20,7 @@ const Header: React.FC<headerProps> = ({ routes }) => {
     const renderLink = () => {
         const links: React.SetStateAction<any[]> = []
 
-        routes.map((route, index) => {
+        routes.forEach((route, index) => {
             if (
                 (user && route.auth && route.role === user.role) ||
                 !route.auth
@@ -56,7 +56,7 @@ const Header: React.FC<headerProps> = ({ routes }) => {
         <div className="header">
             <div className="logo">
                 <h1>TVS</h1>
-                <img src={'/logo.png'} />
+                <img src={'/logo.png'} alt="Logo" />
             </div>
             <div className="links">
                 {navLinks.map((navlink) => {

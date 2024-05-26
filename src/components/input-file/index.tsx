@@ -49,7 +49,7 @@ const FileInput: React.FC<inputProps> = ({
 
     const handleDeleteSelectedFile = (file: FileWithPreview) => {
         setSelectedFiles(
-            selectedFiles.filter((selectedFile) => selectedFile != file)
+            selectedFiles.filter((selectedFile) => selectedFile !== file)
         )
     }
 
@@ -58,14 +58,16 @@ const FileInput: React.FC<inputProps> = ({
 
         if (response) {
             setUploadedFiles(
-                uploadedFiles.filter((uploadedFile) => uploadedFile != file)
+                uploadedFiles.filter(
+                    (uploadedFile) => uploadedFile.id !== file.id
+                )
             )
         }
     }
 
     useEffect(() => {
         setFieldValue(name, selectedFiles)
-    }, [selectedFiles])
+    }, [selectedFiles, name, setFieldValue])
 
     return (
         <div className="file-input-container">

@@ -41,7 +41,7 @@ const useAuth = (props: HookProps) => {
                     },
                 }
             )
-            .then((res) => {
+            .then(() => {
                 toast.success('Přihlášení proběhlo úspěšně.')
                 mutate()
                 navigate('/')
@@ -80,7 +80,7 @@ const useAuth = (props: HookProps) => {
             if (middleware === 'auth' && !user && error) logout()
             if (user && role !== user.role) navigate('/')
         }
-    }, [user, error, isLoading])
+    }, [user, error, isLoading, logout])
 
     return {
         user,

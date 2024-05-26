@@ -34,7 +34,7 @@ const ElectionAssignCandidates = () => {
 
     const mapOptions = (candidates: CandidateModel[]) => {
         const options: { value: string; text: string }[] = []
-        candidates.map(({ id, name }) => {
+        candidates.forEach(({ id, name }) => {
             const option = {
                 value: id.toString(),
                 text: name,

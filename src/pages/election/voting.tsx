@@ -34,7 +34,7 @@ const ElectionVoting = () => {
                 setVotes(data)
             })
         }
-    }, [user, id])
+    }, [user, id, navigate])
 
     const handleSubmit = async (data: any) => {
         if (id && election?.active) {

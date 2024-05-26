@@ -27,7 +27,7 @@ const ElectionShow = () => {
                 }
             })
         }
-    }, [user, id])
+    }, [user, id, navigate])
 
     if (isLoading || !user || !election) {
         return <Loading />

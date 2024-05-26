@@ -30,7 +30,7 @@ const CandidateCreate = () => {
         const options: { value: string; text: string }[] = []
         options.push({ value: '', text: 'Bez politické strany' })
 
-        parties.map(({ id, name }) => {
+        parties.forEach(({ id, name }) => {
             const option = {
                 value: id.toString(),
                 text: name,

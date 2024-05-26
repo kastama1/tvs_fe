@@ -1,5 +1,5 @@
 import './index.scss'
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { ElectionTypeEnum } from '../../../utils/enums/ElectionTypeEnum'
 import { Link } from 'react-router-dom'
 import ElectionModel from '../../../utils/models/election.model'
@@ -12,7 +12,6 @@ const ElectionBox: React.FC<electionBoxProps> = ({
     electionType,
     electionsOfType,
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
     const nodeRef = useRef(null)
 
     return (
