@@ -10,7 +10,7 @@ import ElectionBox from '../../page-section/election/election-box'
 
 const Election = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'voter' })
 
     const [elections, setElections] = useState<ElectionModel[]>([])
 

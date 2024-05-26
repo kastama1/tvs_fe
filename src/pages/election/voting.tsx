@@ -8,17 +8,16 @@ import ElectionModel from '../../utils/models/election.model'
 import Loading from '../../page-section/loading'
 import ElectionVotingForm from '../../page-section/election/election-voting-form'
 import VoteModel from '../../utils/models/vote.model'
-import ElectionVotingBox from '../../page-section/election/election-voting-box'
+import { toast } from 'react-toastify'
 
 const ElectionVoting = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'voter' })
     const { id } = useParams()
     const navigate = useNavigate()
 
-    const now = new Date()
-
     const [vote, setVote] = useState<VoteModel | null>(null)
+    const [preferVotes, setPreferVotes] = useState<VoteModel[] | null>(null)
     const [election, setElection] = useState<ElectionModel | null>(null)
 
     useEffect(() => {
@@ -32,46 +31,66 @@ const ElectionVoting = () => {
             })
 
             api.getVote(id).then((data) => {
-                setVote(data)
+                setVotes(data)
             })
         }
     }, [user, id])
 
     const handleSubmit = async (data: any) => {
-        if (id && isActive) {
+        if (id && election?.active) {
+            if (data.vote === null) {
+                toast.error('Nejdříve musíte zvolit svůj hlas')
+                return
+            }
+
             api.vote(id, data)
             api.getVote(id).then((data) => {
-                setVote(data)
+                setVotes(data)
             })
+
+            const voteElement = document.getElementById(data.vote)
+
+            setTimeout(
+                () =>
+                    voteElement?.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                    }),
+                100
+            )
         }
     }
 
-    if (isLoading || !user || !election || !vote) {
+    const setVotes = (votes: VoteModel[]) => {
+        setVote(votes.filter((vote) => !vote.isPreferVote)[0])
+        setPreferVotes(votes.filter((vote) => vote.isPreferVote))
+    }
+
+    if (isLoading || !user || !election) {
         return <Loading />
     }
 
-    const initialValues = {
-        electionParty: vote && vote.value ? vote.value : 0,
+    if (!election.active) {
+        navigate(-1)
     }
 
-    const isPublished =
-        new Date(election.publishFrom) <= now &&
-        now < new Date(election.startFrom)
-    const isActive =
-        new Date(election.startFrom) <= now && now < new Date(election.endTo)
+    const initialValues = {
+        vote: vote && vote.value ? String(vote.value) : null,
+        prefer_votes: preferVotes
+            ? preferVotes.map((preferVote) => String(preferVote.value))
+            : [],
+    }
 
     return (
         <>
             <Heading>{'Hlasování ' + election.name}</Heading>
 
-            {isActive ? (
+            {election.active && initialValues && (
                 <ElectionVotingForm
                     election={election}
                     initialValues={initialValues}
                     handleSubmit={handleSubmit}
                 />
-            ) : (
-                isPublished && <ElectionVotingBox election={election} />
             )}
         </>
     )

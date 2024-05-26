@@ -11,11 +11,9 @@ import ButtonLink from '../../components/button-link'
 
 const ElectionShow = () => {
     useTitle('Volby')
-    const { user, isLoading } = useAuth({ middleware: 'auth' })
+    const { user, isLoading } = useAuth({ middleware: 'auth', role: 'voter' })
     const { id } = useParams()
     const navigate = useNavigate()
-
-    const now = new Date()
 
     const [election, setElection] = useState<ElectionModel | null>(null)
 
@@ -35,26 +33,18 @@ const ElectionShow = () => {
         return <Loading />
     }
 
-    const isPublished =
-        new Date(election.publishFrom) <= now &&
-        now < new Date(election.startFrom)
-    const isActive =
-        new Date(election.startFrom) <= now && now < new Date(election.endTo)
-
-    const text = isPublished
-        ? 'Prohlédnout politické strany'
-        : isActive
-        ? 'Přejít volit'
-        : ''
+    if (!election.published) {
+        navigate(-1)
+    }
 
     return (
         <>
             <Heading>{election.name}</Heading>
             <div>{parse(election.info)}</div>
 
-            {(isPublished || isActive) && (
+            {election.active && (
                 <ButtonLink to={`/elections/${election.id}/voting`}>
-                    {text}
+                    Přejít volit
                 </ButtonLink>
             )}
         </>

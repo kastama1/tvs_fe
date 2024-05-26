@@ -3,7 +3,7 @@ import { Field } from 'formik'
 
 interface checkboxProps {
     name: string
-    options: { value: string | null; text: string }[]
+    options: { value: string; text: string }[]
 }
 const Checkbox: React.FC<checkboxProps> = ({ name, options }) => {
     return (

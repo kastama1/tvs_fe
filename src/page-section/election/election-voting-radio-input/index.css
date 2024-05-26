@@ -1,4 +1,4 @@
-.election-voting-radio {
+.option {
   width: 100%;
   border: 1px solid var(--color-black);
   border-radius: var(--border-radius-normal);
@@ -7,23 +7,31 @@
   color: var(--color-red);
   margin-bottom: 20px;
 }
-.election-voting-radio.vote {
-  border-color: var(--color-lime);
+.option.vote {
   background-color: rgba(132, 204, 22, 0.4);
 }
-.election-voting-radio label {
+.option .sub-options h4 {
+  margin: 10px 20px;
+}
+.option .sub-options label {
+  padding: 20px 80px;
+}
+.option .sub-options .sub-option.vote {
+  background-color: rgba(132, 204, 22, 0.4);
+}
+.option label {
   display: block;
   position: relative;
   width: 100%;
   height: 100%;
   padding: 20px 60px;
 }
-.election-voting-radio label input {
+.option label input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
 }
-.election-voting-radio label .checkmark {
+.option label .radiomark {
   position: absolute;
   top: 50%;
   left: 0;
@@ -34,15 +42,32 @@
   transform: translateY(-50%);
   margin-left: 20px;
 }
-.election-voting-radio label .checkmark:after {
+.option label .radiomark:after {
   content: "";
   position: absolute;
   display: none;
 }
-.election-voting-radio label input:checked ~ .checkmark:after {
+.option label .checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--color-gray);
+  border-radius: var(--border-radius-small);
+  transform: translateY(-50%);
+  margin-left: 40px;
+}
+.option label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.option label input:checked ~ .radiomark:after,
+.option label input:checked ~ .checkmark:after {
   display: block;
 }
-.election-voting-radio label .checkmark:after {
+.option label .radiomark:after {
   top: 9px;
   left: 9px;
   width: 8px;
@@ -50,15 +75,28 @@
   border-radius: 50%;
   background: white;
 }
-.election-voting-radio label:hover {
+.option label .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+.option label input:checked ~ .radiomark,
+.option label input:checked ~ .checkmark {
+  background-color: var(--color-blue);
+}
+.option label:hover {
   color: var(--color-red-darken);
   background-color: var(--color-gray-light);
 }
-.election-voting-radio label:hover input ~ .checkmark {
+.option label:hover input ~ .radiomark,
+.option label:hover input ~ .checkmark {
   background-color: var(--color-gray-darken);
 }
-.election-voting-radio label input:checked ~ .checkmark {
-  background-color: var(--color-blue);
+.option label:has(input:disabled) {
+  background-color: var(--color-gray-light);
 }
 
 /*# sourceMappingURL=index.css.map */

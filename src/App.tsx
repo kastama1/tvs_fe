@@ -15,6 +15,8 @@ import AdminElectionPartyShow from './pages/admin/election-party/show'
 import AdminElectionPartyCreate from './pages/admin/election-party/create'
 import AdminElectionPartyEdit from './pages/admin/election-party/edit'
 import AdminElectionAssignElectionParties from './pages/admin/election/assign-election-parties'
+
+import AdminElectionAssignCandidates from './pages/admin/election/assign-candidates'
 import AdminCandidate from './pages/admin/candidate/list'
 import AdminCandidateShow from './pages/admin/candidate/show'
 import AdminCandidateCreate from './pages/admin/candidate/create'
@@ -78,6 +80,10 @@ function App(this: any) {
         {
             path: '/administration/elections/:id/assign-election-parties',
             element: <AdminElectionAssignElectionParties />,
+        },
+        {
+            path: '/administration/elections/:id/assign-candidates',
+            element: <AdminElectionAssignCandidates />,
         },
         {
             path: '/administration/election-parties/:id',

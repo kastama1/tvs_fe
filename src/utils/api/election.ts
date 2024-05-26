@@ -5,6 +5,7 @@ const list = async () => {
     const result = await axios.get(`/api/elections`).catch((error) => {
         getErrorMessage(error)
     })
+
     return result?.data.data
 }
 
@@ -60,6 +61,17 @@ const assignElectionParties = (id: number, data: any) => {
         })
 }
 
+const assignCandidates = (id: number, data: any) => {
+    axios
+        .put(`/api/elections/${id}/assign-candidates`, data)
+        .then((response) => {
+            toast.success('Kandidáti byly úspěšně zapsány k volbám.')
+        })
+        .catch((error) => {
+            getErrorMessage(error)
+        })
+}
+
 const getVote = async (id: string) => {
     const result = await axios
         .get(`/api/elections/${id}/vote`)
@@ -79,7 +91,6 @@ const vote = (id: string, data: any) => {
             getErrorMessage(error)
         })
 }
-
 export default {
     list,
     listByType,
@@ -87,6 +98,7 @@ export default {
     store,
     update,
     assignElectionParties,
+    assignCandidates,
     getVote,
     vote,
 }

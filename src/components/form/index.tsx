@@ -49,6 +49,10 @@ const FormWrapper: React.FC<formProps> = ({
                 return options ? (
                     <Checkbox name={name} options={options} />
                 ) : null
+            case 'radio':
+                return options ? (
+                    <Checkbox name={name} options={options} />
+                ) : null
             case 'texteditor':
                 return <QuillInput name={name} />
             case 'file':

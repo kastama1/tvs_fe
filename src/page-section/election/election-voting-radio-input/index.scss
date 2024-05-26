@@ -1,4 +1,4 @@
-.election-voting-radio {
+.option {
     width: 100%;
 
     border: 1px solid var(--color-black);
@@ -12,8 +12,24 @@
     margin-bottom: 20px;
 
     &.vote{
-        border-color: var(--color-lime);
         background-color: rgba(132, 204, 22, 0.4);
+    }
+
+    .sub-options {
+
+        h4 {
+            margin: 10px 20px;
+        }
+
+        label {
+            padding: 20px 80px;
+        }
+
+        .sub-option {
+            &.vote {
+                background-color: rgba(132, 204, 22, 0.4);
+            }
+        }
     }
 
     label {
@@ -30,7 +46,7 @@
             cursor: pointer;
         }
 
-        .checkmark {
+        .radiomark {
             position: absolute;
             top: 50%;
             left: 0;
@@ -50,8 +66,38 @@
             }
         }
 
+        .checkmark {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: var(--color-gray);
+            border-radius: var(--border-radius-small);
+
+            transform: translateY(-50%);
+
+            margin-left: 40px;
+
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+        }
+
+        input:checked ~ .radiomark:after,
         input:checked ~ .checkmark:after {
             display: block;
+        }
+
+        .radiomark:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
         }
 
         .checkmark:after {
@@ -63,18 +109,24 @@
             background: white;
         }
 
+        input:checked ~ .radiomark,
+        input:checked ~ .checkmark {
+            background-color: var(--color-blue);
+        }
+
         &:hover{
             color: var(--color-red-darken);
             background-color: var(--color-gray-light);
 
+            input ~ .radiomark,
             input ~ .checkmark {
                 background-color: var(--color-gray-darken);
 
             }
         }
 
-        input:checked ~ .checkmark {
-            background-color: var(--color-blue);
+        &:has(input:disabled) {
+            background-color: var(--color-gray-light);
         }
     }
 }

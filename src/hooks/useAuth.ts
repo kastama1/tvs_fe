@@ -10,7 +10,7 @@ interface HookProps {
 }
 
 const useAuth = (props: HookProps) => {
-    const { middleware, role = 'voter' } = props
+    const { middleware, role } = props
 
     const navigate = useNavigate()
 
@@ -58,8 +58,10 @@ const useAuth = (props: HookProps) => {
             setIsLoading(false)
         }
 
-        if (middleware === 'auth' && !user && error) logout()
-        if (user && role !== user.role) navigate('/')
+        if (!isLoading && middleware && role) {
+            if (middleware === 'auth' && !user && error) logout()
+            if (user && role !== user.role) navigate('/')
+        }
     }, [user, error, isLoading])
 
     return {
