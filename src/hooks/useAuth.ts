@@ -30,8 +30,18 @@ const useAuth = (props: HookProps) => {
         await csrf()
 
         axios
-            .post('/api/login', { email, password })
-            .then(() => {
+            .post(
+                '/api/login',
+                { email, password },
+                {
+                    headers: {
+                        'X-XSRF-TOKEN': decodeURIComponent(
+                            getCookie('XSRF-TOKEN')
+                        ),
+                    },
+                }
+            )
+            .then((res) => {
                 toast.success('Přihlášení proběhlo úspěšně.')
                 mutate()
                 navigate('/')
@@ -51,6 +61,14 @@ const useAuth = (props: HookProps) => {
         }
 
         navigate('/login')
+    }
+
+    const getCookie = (key: string) => {
+        const cookie = document.cookie.match(
+            '(^|;)\\s*' + key + '\\s*=\\s*([^;]+)'
+        )
+        const cookieValue = cookie ? cookie.pop() : ''
+        return cookieValue ? cookieValue : ''
     }
 
     useEffect(() => {
