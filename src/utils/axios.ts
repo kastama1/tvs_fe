@@ -31,7 +31,7 @@ axios.interceptors.request.use(
 
         if (!xsrfToken) {
             try {
-                await csrfAxios.get('/api/csrf-token')
+                await csrfAxios.get('/api/sanctum/csrf-cookie')
 
                 xsrfToken = decodeURIComponent(getCookie('XSRF-TOKEN'))
             } catch (error) {
