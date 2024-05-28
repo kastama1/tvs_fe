@@ -12,10 +12,44 @@ export const axios = Axios.create({
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         Accept: 'application/json',
-        'X-XSRF-TOKEN': decodeURIComponent(getCookie('XSRF-TOKEN')),
     },
     withCredentials: true,
 })
+
+const csrfAxios = Axios.create({
+    baseURL: process.env.REACT_APP_BACKEND_URL,
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        Accept: 'application/json',
+    },
+    withCredentials: true,
+})
+
+axios.interceptors.request.use(
+    async (config) => {
+        let xsrfToken = decodeURIComponent(getCookie('XSRF-TOKEN'))
+
+        if (!xsrfToken) {
+            try {
+                await csrfAxios.get('/csrf-token')
+
+                xsrfToken = decodeURIComponent(getCookie('XSRF-TOKEN'))
+            } catch (error) {
+                console.error('Error fetching CSRF token', error)
+                throw error
+            }
+        }
+
+        if (xsrfToken) {
+            config.headers['X-XSRF-TOKEN'] = xsrfToken
+        }
+
+        return config
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)
 
 export const getErrorMessage = (error: any) => {
     if (error.response.status === 422) {

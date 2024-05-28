@@ -24,11 +24,7 @@ const useAuth = (props: HookProps) => {
         axios.get('/api/user').then((res) => res.data)
     )
 
-    const csrf = () => axios.get('/api/sanctum/csrf-cookie')
-
     const login = async (email: string, password: string) => {
-        await csrf()
-
         axios
             .post('/api/login', { email, password })
             .then(() => {
@@ -67,7 +63,6 @@ const useAuth = (props: HookProps) => {
     return {
         user,
         isLoading,
-        csrf,
         login,
         logout,
     }

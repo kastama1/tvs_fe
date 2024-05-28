@@ -24,7 +24,6 @@ const ElectionPartyShow = () => {
     useEffect(() => {
         if (user && id) {
             api.show(id).then((data) => {
-                console.log(data)
                 setElectionParty(data)
             })
         }

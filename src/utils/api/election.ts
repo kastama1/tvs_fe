@@ -31,7 +31,6 @@ const store = (data: any) => {
     axios
         .post(`/api/elections`, data)
         .then((response) => {
-            console.log(response)
             toast.success('Volby byly přidány úspěšně.')
         })
         .catch((error) => {
