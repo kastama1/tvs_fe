@@ -49,7 +49,7 @@ const ElectionPartyShow = () => {
                     />
                 )}
 
-                <p>{parse(electionParty.campaign)}</p>
+                <div>{parse(electionParty.campaign)}</div>
             </div>
 
             <h3>Kandidáti</h3>
@@ -60,28 +60,29 @@ const ElectionPartyShow = () => {
                 Přidat nového kandidáta
             </ButtonLink>
 
-            {electionParty.candidates && (
-                <Table>
-                    <>
-                        <thead>
-                            <CandidateTableHeader />
-                        </thead>
+            {electionParty.candidates &&
+                electionParty.candidates.length > 0 && (
+                    <Table>
+                        <>
+                            <thead>
+                                <CandidateTableHeader />
+                            </thead>
 
-                        <tbody>
-                            {electionParty.candidates.map(
-                                (candidate, index) => {
-                                    return (
-                                        <CandidateTableRow
-                                            candidate={candidate}
-                                            key={index}
-                                        />
-                                    )
-                                }
-                            )}
-                        </tbody>
-                    </>
-                </Table>
-            )}
+                            <tbody>
+                                {electionParty.candidates.map(
+                                    (candidate, index) => {
+                                        return (
+                                            <CandidateTableRow
+                                                candidate={candidate}
+                                                key={index}
+                                            />
+                                        )
+                                    }
+                                )}
+                            </tbody>
+                        </>
+                    </Table>
+                )}
         </>
     )
 }

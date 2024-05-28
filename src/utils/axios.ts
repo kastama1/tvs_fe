@@ -52,9 +52,9 @@ axios.interceptors.request.use(
 )
 
 export const getErrorMessage = (error: any) => {
-    if (error.response.status === 422) {
+    if (error.response.status && error.response.status === 422) {
         toast.error(error.response.data.message)
-    } else if (error.response.status === 403) {
+    } else if (error.response.status && error.response.status === 403) {
         toast.error('Tato akce je neoprávněná')
     } else {
         toast.error('Něco se pokazilo')

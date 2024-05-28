@@ -40,7 +40,7 @@ const CandidateShow = () => {
                     <img src={candidate.images[0].url} alt={candidate.name} />
                 )}
 
-                <p>{parse(candidate.campaign)}</p>
+                <div>{parse(candidate.campaign)}</div>
             </div>
         </>
     )
