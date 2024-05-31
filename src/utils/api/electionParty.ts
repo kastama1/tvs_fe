@@ -40,7 +40,7 @@ const update = (id: number, data: any) => {
     formData.append('name', data['name'])
     formData.append('campaign', data['campaign'])
 
-    data.images.map((image: FileWithPreview) => {
+    data.images.forEach((image: FileWithPreview) => {
         formData.append('images[]', image)
     })
 

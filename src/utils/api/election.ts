@@ -9,16 +9,6 @@ const list = async () => {
     return result?.data.data
 }
 
-const listByType = async () => {
-    const result = await axios
-        .get(`/api/elections/list-by-type`)
-        .catch((error) => {
-            getErrorMessage(error)
-        })
-
-    return result?.data.data
-}
-
 const show = async (id: string) => {
     const result = await axios.get(`/api/elections/${id}`).catch((error) => {
         getErrorMessage(error)
@@ -92,7 +82,6 @@ const vote = (id: string, data: any) => {
 }
 export default {
     list,
-    listByType,
     show,
     store,
     update,
