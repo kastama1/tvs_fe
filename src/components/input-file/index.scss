@@ -56,6 +56,10 @@
             div {
                 width: calc(10% - 18px);
 
+                @media only screen and (max-width: 768px) {
+                    width: calc(50% - 18px);
+                }
+
                 position: relative;
 
                 svg {

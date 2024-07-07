@@ -43,6 +43,11 @@
   width: calc(10% - 18px);
   position: relative;
 }
+@media only screen and (max-width: 768px) {
+  .file-input-container .file-preview .file-input-preview div {
+    width: calc(50% - 18px);
+  }
+}
 .file-input-container .file-preview .file-input-preview div svg {
   position: absolute;
   top: 0;

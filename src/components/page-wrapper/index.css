@@ -9,6 +9,12 @@
   padding: 30px 20px;
   margin: auto;
 }
+@media only screen and (max-width: 768px) {
+  .page-wrapper .container {
+    width: 90%;
+    padding: 15px 10px;
+  }
+}
 .page-wrapper .container > div {
   padding: 10px;
 }

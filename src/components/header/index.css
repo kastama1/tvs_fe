@@ -6,24 +6,56 @@
   background-color: var(--color-white);
   box-shadow: var(--box-shadow);
 }
-.header .logo {
+@media only screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 20px;
+  }
+}
+.header .logo-menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.header .logo-menu .logo {
   display: flex;
   gap: 20px;
 }
-.header .logo h1 {
+.header .logo-menu .logo h1 {
   margin: 0;
   color: var(--color-blue);
   font-size: 40px;
 }
-.header .logo img {
+.header .logo-menu .logo img {
   height: 45px;
   width: auto;
   -webkit-filter: drop-shadow(5px 5px 5px #222222);
   filter: drop-shadow(5px 5px 5px #222222);
 }
+.header .logo-menu .icon {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  .header .logo-menu .icon {
+    display: flex;
+    align-items: center;
+  }
+}
+.header .logo-menu .icon svg {
+  width: 30px;
+  height: 30px;
+}
 .header .links {
   display: flex;
   gap: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .header .links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    margin-top: 20px;
+  }
 }
 .header .links a {
   font-size: 20px;
@@ -38,6 +70,7 @@
   color: var(--color-text);
   border: none;
   background-color: transparent;
+  text-align: left;
 }
 .header .links button:hover {
   cursor: pointer;
@@ -49,6 +82,14 @@
 .header .links span {
   margin-top: 4px;
   cursor: default;
+}
+@media only screen and (max-width: 768px) {
+  .header .links .slash {
+    display: none;
+  }
+}
+.header .show {
+  display: flex !important;
 }
 
 /*# sourceMappingURL=index.css.map */
