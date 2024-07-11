@@ -68,6 +68,7 @@
         a {
             font-size: 20px;
             color: var(--color-text);
+            white-space: nowrap;
         }
 
         a:hover {
@@ -80,6 +81,7 @@
             color: var(--color-text);
             border: none;
             background-color: transparent;
+            white-space: nowrap;
             text-align: left;
         }
 

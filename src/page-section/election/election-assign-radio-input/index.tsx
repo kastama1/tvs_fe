@@ -3,7 +3,7 @@ import React from 'react'
 import { Field } from 'formik'
 import ElectionModel from '../../../utils/models/election.model'
 
-interface electionVotingRadioInputProps {
+interface electionAssignRadioInputProps {
     option: {
         value: number
         text: string
@@ -15,29 +15,37 @@ interface electionVotingRadioInputProps {
               }[]
             | null
     }
-    values: { vote: string | null; prefer_votes: string[] }
-    initialValues: { vote: string | null; prefer_votes: string[] }
+    values: { options: string[]; subOptions: string[] }
+    initialValues: { options: string[]; subOptions: string[] }
 
     election: ElectionModel
 }
-const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
+const ElectionAssignRadioInput: React.FC<electionAssignRadioInputProps> = ({
     option,
     values,
     initialValues,
     election,
 }) => {
-    const preferVotes = election.preferVotes - values.prefer_votes.length
-
+    const optionSubOptions = option.subOptions?.map((subOption) =>
+        String(subOption.value)
+    )
     const handleOptionClick = (value: number) => {
-        if (String(value) !== values.vote) {
-            values.prefer_votes = []
+        if (values.options.includes(String(value))) {
+            values.options = values.options.filter(
+                (option) => option !== String(value)
+            )
+
+            if (optionSubOptions) {
+                values.subOptions = values.subOptions.filter(
+                    (subOption) => !optionSubOptions.includes(subOption)
+                )
+            }
         }
     }
-
     const handleSubOptionClick = (value: number) => {
-        if (values.prefer_votes.includes(String(value))) {
-            values.prefer_votes = values.prefer_votes.filter(
-                (prefer_votes) => prefer_votes !== String(value)
+        if (values.subOptions.includes(String(value))) {
+            values.subOptions = values.subOptions.filter(
+                (subOption) => subOption !== String(value)
             )
         }
     }
@@ -46,9 +54,9 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
         <div
             id={String(option.value)}
             className={
-                initialValues.vote === String(option.value)
-                    ? 'option vote'
-                    : 'option'
+                initialValues.options.includes(String(option.value))
+                    ? 'assign-option vote'
+                    : 'assign-option'
             }
         >
             <div
@@ -58,32 +66,31 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
             >
                 <label onClick={() => handleOptionClick(option.value)}>
                     <Field
-                        type="radio"
-                        name="vote"
+                        type="checkbox"
+                        name="options"
                         value={option.value}
-                        checked={values.vote === String(option.value)}
+                        checked={values.options.includes(String(option.value))}
                     />
-                    <span className="radiomark"></span>
+                    <span className="checkmark"></span>
                     {option.text}
                 </label>
             </div>
 
             {option.subOptions && (
                 <div className="sub-options">
+                    <hr></hr>
                     <div>
-                        <hr></hr>
-                        <h4>
-                            Kandidáti
-                            {values.vote === String(option.value) &&
-                                ` - preferenční hlasy (${preferVotes})`}
-                        </h4>
+                        <h4>Kandidáti</h4>
                     </div>
 
                     {option.subOptions.map((subOption, index) => {
+                        const disable = !values.options.includes(
+                            String(option.value)
+                        )
                         return (
                             <div
                                 className={
-                                    initialValues.prefer_votes.includes(
+                                    initialValues.subOptions.includes(
                                         String(subOption.value)
                                     )
                                         ? 'sub-option vote'
@@ -104,20 +111,12 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
                                     >
                                         <Field
                                             type="checkbox"
-                                            name="prefer_votes"
+                                            name="subOptions"
                                             value={subOption.value}
-                                            checked={values.prefer_votes.includes(
+                                            checked={values.subOptions.includes(
                                                 String(subOption.value)
                                             )}
-                                            disabled={
-                                                String(
-                                                    subOption.disabledValue
-                                                ) !== values.vote ||
-                                                (preferVotes === 0 &&
-                                                    !values.prefer_votes.includes(
-                                                        String(subOption.value)
-                                                    ))
-                                            }
+                                            disabled={disable}
                                         />
                                         <span className="checkmark"></span>
                                         {subOption.text}
@@ -132,4 +131,4 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
     )
 }
 
-export default ElectionVotingRadioInput
+export default ElectionAssignRadioInput

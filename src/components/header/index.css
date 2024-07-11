@@ -60,6 +60,7 @@
 .header .links a {
   font-size: 20px;
   color: var(--color-text);
+  white-space: nowrap;
 }
 .header .links a:hover {
   color: var(--color-red);
@@ -70,6 +71,7 @@
   color: var(--color-text);
   border: none;
   background-color: transparent;
+  white-space: nowrap;
   text-align: left;
 }
 .header .links button:hover {

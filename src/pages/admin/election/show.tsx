@@ -37,7 +37,7 @@ const ElectionShow = () => {
             <ButtonLink
                 to={`/administration/elections/${election.id}/assign-candidates`}
             >
-                Přidat kandidáta
+                Přidat kandidáty
             </ButtonLink>
         )
     } else if (election.votable === 'election_parties') {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ElectionModel from '../../../utils/models/election.model'
 import { ElectionTypeEnum } from '../../../utils/enums/ElectionTypeEnum'
 
@@ -7,6 +7,25 @@ interface electionTableRowProps {
     election: ElectionModel
 }
 const ElectionTableRow: React.FC<electionTableRowProps> = ({ election }) => {
+    const navigate = useNavigate()
+
+    let assignButton = null
+    if (election.votable === 'candidates') {
+        assignButton = (
+            <Link to={`/administration/elections/${election.id}/assign`}>
+                Přidat kandidáty
+            </Link>
+        )
+    } else if (election.votable === 'election_parties') {
+        assignButton = (
+            <Link to={`/administration/elections/${election.id}/assign`}>
+                Přidat politické strany
+            </Link>
+        )
+    } else {
+        navigate('/')
+    }
+
     return (
         <tr>
             <td>{election.id}</td>
@@ -30,6 +49,7 @@ const ElectionTableRow: React.FC<electionTableRowProps> = ({ election }) => {
                         Upravit
                     </Link>
                 </div>
+                <div>{assignButton}</div>
             </td>
         </tr>
     )

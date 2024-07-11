@@ -61,6 +61,17 @@ const assignCandidates = (id: number, data: any) => {
         })
 }
 
+const assignOptions = (id: number, data: any) => {
+    axios
+        .put(`/api/elections/${id}/assign-options`, data)
+        .then((response) => {
+            toast.success('Volby byly úspěšně upraveny.')
+        })
+        .catch((error) => {
+            getErrorMessage(error)
+        })
+}
+
 const getVote = async (id: string) => {
     const result = await axios
         .get(`/api/elections/${id}/vote`)
@@ -87,6 +98,7 @@ export default {
     update,
     assignElectionParties,
     assignCandidates,
+    assignOptions,
     getVote,
     vote,
 }

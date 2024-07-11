@@ -14,13 +14,11 @@ import AdminElectionParty from './pages/admin/election-party/list'
 import AdminElectionPartyShow from './pages/admin/election-party/show'
 import AdminElectionPartyCreate from './pages/admin/election-party/create'
 import AdminElectionPartyEdit from './pages/admin/election-party/edit'
-import AdminElectionAssignElectionParties from './pages/admin/election/assign-election-parties'
-
-import AdminElectionAssignCandidates from './pages/admin/election/assign-candidates'
 import AdminCandidate from './pages/admin/candidate/list'
 import AdminCandidateShow from './pages/admin/candidate/show'
 import AdminCandidateCreate from './pages/admin/candidate/create'
 import AdminCandidateEdit from './pages/admin/candidate/edit'
+import AdminElectionAssign from './pages/admin/election/assign'
 import Election from './pages/election/list'
 import ElectionShow from './pages/election/show'
 import ElectionVoting from './pages/election/voting'
@@ -78,12 +76,8 @@ function App(this: any) {
             element: <AdminElectionEdit />,
         },
         {
-            path: '/administration/elections/:id/assign-election-parties',
-            element: <AdminElectionAssignElectionParties />,
-        },
-        {
-            path: '/administration/elections/:id/assign-candidates',
-            element: <AdminElectionAssignCandidates />,
+            path: '/administration/elections/:id/assign',
+            element: <AdminElectionAssign />,
         },
         {
             path: '/administration/election-parties/:id',
