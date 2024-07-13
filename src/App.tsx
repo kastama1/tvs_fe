@@ -16,12 +16,15 @@ import AdminElectionPartyCreate from './pages/admin/election-party/create'
 import AdminElectionPartyEdit from './pages/admin/election-party/edit'
 import AdminCandidate from './pages/admin/candidate/list'
 import AdminCandidateShow from './pages/admin/candidate/show'
+import CandidateShow from './pages/candidate/show'
 import AdminCandidateCreate from './pages/admin/candidate/create'
 import AdminCandidateEdit from './pages/admin/candidate/edit'
 import AdminElectionAssign from './pages/admin/election/assign'
 import Election from './pages/election/list'
 import ElectionShow from './pages/election/show'
 import ElectionVoting from './pages/election/voting'
+import ElectionView from './pages/election/view'
+import ElectionPartyShow from './pages/election-party/show'
 
 function App(this: any) {
     moment.tz.setDefault('Europe/Prague')
@@ -110,6 +113,18 @@ function App(this: any) {
         {
             path: '/elections/:id/voting',
             element: <ElectionVoting />,
+        },
+        {
+            path: '/elections/:id/view',
+            element: <ElectionView />,
+        },
+        {
+            path: '/candidates/:id',
+            element: <CandidateShow />,
+        },
+        {
+            path: '/election-parties/:id',
+            element: <ElectionPartyShow />,
         },
         {
             path: '/login',

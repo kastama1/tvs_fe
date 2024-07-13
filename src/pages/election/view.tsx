@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react'
 import api from '../../utils/api/election'
 import useAuth from '../../hooks/useAuth'
 import { useNavigate, useParams } from 'react-router-dom'
-import parse from 'html-react-parser'
 import ElectionModel from '../../utils/models/election.model'
 import Loading from '../../page-section/loading'
-import ButtonLink from '../../components/button-link'
+import ElectionListCandidates from '../../page-section/election/election-list-candidates'
+import ElectionListElectionParties from '../../page-section/election/election-list-election-parties'
 
-const ElectionShow = () => {
+const ElectionView = () => {
     useTitle('Volby')
     const { user, isLoading } = useAuth({ middleware: 'auth', role: 'voter' })
     const { id } = useParams()
@@ -37,29 +37,28 @@ const ElectionShow = () => {
         navigate(-1)
     }
 
-    let buttonText = ''
+    let headline = ''
+    let list
     if (election.votable === 'candidates') {
-        buttonText = 'Zobrazit kandidáty'
+        headline = 'Kandidáti'
+        list = <ElectionListCandidates candidates={election.candidates} />
     } else if (election.votable === 'election_parties') {
-        buttonText = 'Zobrazit politické strany a jejich kandidáty'
+        headline = 'Politické strany a jejich kandidáty'
+        list = (
+            <ElectionListElectionParties
+                electionParties={election.electionParties}
+                candidates={election.candidates}
+            />
+        )
     }
 
     return (
         <>
-            <Heading>{election.name}</Heading>
-            <div>{parse(election.info)}</div>
+            <Heading>{headline}</Heading>
 
-            <ButtonLink to={`/elections/${election.id}/view`}>
-                {buttonText}
-            </ButtonLink>
-
-            {election.active && (
-                <ButtonLink to={`/elections/${election.id}/voting`}>
-                    Přejít volit
-                </ButtonLink>
-            )}
+            {list && list}
         </>
     )
 }
 
-export default ElectionShow
+export default ElectionView

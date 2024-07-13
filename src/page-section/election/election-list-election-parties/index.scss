@@ -1,0 +1,48 @@
+.election-parties-container {
+    .election-party-candidates-container {
+        border: 1px solid var(--color-black);
+        border-radius: var(--border-radius-normal);
+
+        box-shadow: var(--box-shadow);
+
+        font-size: var(--font-size-h3);
+
+        padding: 20px;
+        margin-bottom: 20px;
+
+        a {
+            color: var(--color-red);
+
+            &:hover {
+                color: var(--color-red-darken);
+            }
+        }
+
+        .election-party-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            h3 {
+                margin-top: 0;
+            }
+
+            img {
+                width: auto;
+                height: 175px;
+            }
+        }
+
+        h4 {
+            color: var(--color-red);
+            margin-bottom: 5px;
+        }
+
+        .candidate-container {
+            border: none;
+            box-shadow: none;
+            margin: 0;
+        }
+    }
+}
