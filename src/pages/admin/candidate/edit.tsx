@@ -103,7 +103,7 @@ const CandidateEdit = () => {
 
     return (
         <>
-            <Heading>Upravit politickou stranu</Heading>
+            <Heading>Upravit kandidáta</Heading>
 
             <FormWrapper
                 inputs={inputs}
