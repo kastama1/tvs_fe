@@ -66,19 +66,24 @@ const ElectionVoting = () => {
         setPreferVotes(votes.filter((vote) => vote.isPreferVote))
     }
 
-    if (isLoading || !user || !election) {
-        return <Loading />
-    }
-
-    if (!election.active) {
-        navigate(-1)
-    }
-
     const initialValues = {
         vote: vote && vote.value ? String(vote.value) : null,
         prefer_votes: preferVotes
             ? preferVotes.map((preferVote) => String(preferVote.value))
             : [],
+    }
+
+    if (
+        isLoading ||
+        !user ||
+        !election ||
+        (vote !== undefined && initialValues.vote === null)
+    ) {
+        return <Loading />
+    }
+
+    if (!election.active) {
+        navigate(-1)
     }
 
     return (

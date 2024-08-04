@@ -3,4 +3,24 @@
   margin-top: 20px;
 }
 
+.votes ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.votes ul ul {
+  padding: 10px;
+}
+.votes ul ul li {
+  margin: 5px 0px;
+}
+.votes ul a {
+  color: var(--color-red);
+  text-decoration: none;
+  font-weight: bold;
+}
+.votes ul a:hover {
+  color: var(--color-red-darken);
+}
+
 /*# sourceMappingURL=show.css.map */

@@ -7,6 +7,7 @@ interface ElectionParty {
     campaign: string
     images: File[]
     candidates: CandidateModel[] | null
+    votes: number
     createdAt: string
     updatedAt: string
 }

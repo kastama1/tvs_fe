@@ -110,7 +110,7 @@ const CandidateEdit = () => {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 handleSubmit={handleSubmit}
-                submitText={'Upravit politickou stranu'}
+                submitText={'Upravit kandidáta'}
             />
         </>
     )

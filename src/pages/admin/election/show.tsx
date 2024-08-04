@@ -3,7 +3,7 @@ import Heading from '../../../components/heading'
 import { useEffect, useState } from 'react'
 import api from '../../../utils/api/election'
 import useAuth from '../../../hooks/useAuth'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import parse from 'html-react-parser'
 import ElectionModel from '../../../utils/models/election.model'
 import Loading from '../../../page-section/loading'
@@ -31,6 +31,7 @@ const ElectionShow = () => {
     }
 
     let assignButton = null
+    let options
 
     if (election.votable === 'candidates') {
         assignButton = (
@@ -40,6 +41,12 @@ const ElectionShow = () => {
                 Přidat kandidáty
             </ButtonLink>
         )
+        options = election.candidates.map(({ id, name, votes }) => ({
+            name: name,
+            votes: votes,
+            link: `/administration/candidates/${id}`,
+            subOptions: null,
+        }))
     } else if (election.votable === 'election_parties') {
         assignButton = (
             <ButtonLink
@@ -48,6 +55,18 @@ const ElectionShow = () => {
                 Přidat politické strany
             </ButtonLink>
         )
+        options = election.electionParties.map(({ id, name, votes }) => ({
+            name: name,
+            votes: votes,
+            link: `/administration/election-parties/${id}`,
+            subOptions: election.candidates
+                .filter((candidate) => candidate.electionParty?.id === id)
+                .map(({ id, name, votes }) => ({
+                    name: name,
+                    votes: votes,
+                    link: `/administration/candidates/${id}`,
+                })),
+        }))
     } else {
         navigate('/')
     }
@@ -61,6 +80,51 @@ const ElectionShow = () => {
 
             {assignButton && assignButton}
             <div className="text-container">{parse(election.info)}</div>
+
+            <h3>Hlasy</h3>
+
+            <div className="votes">
+                <ul>
+                    {options &&
+                        options.map((option) => {
+                            return (
+                                <>
+                                    <li>
+                                        <Link to={option.link}>
+                                            {option.name}
+                                        </Link>{' '}
+                                        - {option.votes}
+                                        <ul>
+                                            {option.subOptions &&
+                                                option.subOptions.map(
+                                                    (subOption) => {
+                                                        return (
+                                                            <li>
+                                                                <Link
+                                                                    to={
+                                                                        subOption.link
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        subOption.name
+                                                                    }
+                                                                </Link>{' '}
+                                                                -{' '}
+                                                                {
+                                                                    subOption.votes
+                                                                }
+                                                            </li>
+                                                        )
+                                                    }
+                                                )}
+                                        </ul>
+                                    </li>
+                                    <hr></hr>
+                                </>
+                            )
+                        })}
+                </ul>
+            </div>
         </>
     )
 }

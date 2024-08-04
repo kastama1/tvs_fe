@@ -7,6 +7,7 @@ interface Candidate {
     campaign: string
     images: File[]
     electionParty: ElectionPartyModel | undefined
+    votes: number
     createdAt: string
     updatedAt: string
 }
