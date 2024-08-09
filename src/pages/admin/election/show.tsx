@@ -42,6 +42,7 @@ const ElectionShow = () => {
             </ButtonLink>
         )
         options = election.candidates.map(({ id, name, votes }) => ({
+            id: id,
             name: name,
             votes: votes,
             link: `/administration/candidates/${id}`,
@@ -56,12 +57,14 @@ const ElectionShow = () => {
             </ButtonLink>
         )
         options = election.electionParties.map(({ id, name, votes }) => ({
+            id: id,
             name: name,
             votes: votes,
             link: `/administration/election-parties/${id}`,
             subOptions: election.candidates
                 .filter((candidate) => candidate.electionParty?.id === id)
                 .map(({ id, name, votes }) => ({
+                    id: id,
                     name: name,
                     votes: votes,
                     link: `/administration/candidates/${id}`,
@@ -88,7 +91,7 @@ const ElectionShow = () => {
                     {options &&
                         options.map((option) => {
                             return (
-                                <>
+                                <div key={option.id}>
                                     <li>
                                         <Link to={option.link}>
                                             {option.name}
@@ -99,7 +102,11 @@ const ElectionShow = () => {
                                                 option.subOptions.map(
                                                     (subOption) => {
                                                         return (
-                                                            <li>
+                                                            <li
+                                                                key={
+                                                                    subOption.id
+                                                                }
+                                                            >
                                                                 <Link
                                                                     to={
                                                                         subOption.link
@@ -120,7 +127,7 @@ const ElectionShow = () => {
                                         </ul>
                                     </li>
                                     <hr></hr>
-                                </>
+                                </div>
                             )
                         })}
                 </ul>

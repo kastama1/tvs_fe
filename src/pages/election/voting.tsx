@@ -17,8 +17,8 @@ const ElectionVoting = () => {
     const navigate = useNavigate()
 
     const [vote, setVote] = useState<VoteModel | null>(null)
-    const [preferVotes, setPreferVotes] = useState<VoteModel[] | null>(null)
     const [election, setElection] = useState<ElectionModel | null>(null)
+    const [loadingVote, setLoadingVote] = useState<boolean>(true)
 
     useEffect(() => {
         if (user && id) {
@@ -31,7 +31,8 @@ const ElectionVoting = () => {
             })
 
             api.getVote(id).then((data) => {
-                setVotes(data)
+                setVote(data)
+                setLoadingVote(false)
             })
         }
     }, [user, id, navigate])
@@ -45,7 +46,7 @@ const ElectionVoting = () => {
 
             api.vote(id, data)
             api.getVote(id).then((data) => {
-                setVotes(data)
+                setVote(data)
             })
 
             const voteElement = document.getElementById(data.vote)
@@ -61,24 +62,14 @@ const ElectionVoting = () => {
         }
     }
 
-    const setVotes = (votes: VoteModel[]) => {
-        setVote(votes.filter((vote) => !vote.isPreferVote)[0])
-        setPreferVotes(votes.filter((vote) => vote.isPreferVote))
-    }
-
     const initialValues = {
         vote: vote && vote.value ? String(vote.value) : null,
-        prefer_votes: preferVotes
-            ? preferVotes.map((preferVote) => String(preferVote.value))
+        prefer_votes: vote?.votes
+            ? vote.votes.map((preferVote) => String(preferVote.value))
             : [],
     }
 
-    if (
-        isLoading ||
-        !user ||
-        !election ||
-        (vote !== undefined && initialValues.vote === null)
-    ) {
+    if (isLoading || !user || !election || loadingVote) {
         return <Loading />
     }
 
