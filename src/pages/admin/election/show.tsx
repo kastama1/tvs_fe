@@ -74,6 +74,10 @@ const ElectionShow = () => {
         navigate('/')
     }
 
+    const handleDownloadVote = (election: ElectionModel) => {
+        api.downloadVotes(String(election.id))
+    }
+
     return (
         <>
             <Heading>{election.name}</Heading>
@@ -85,6 +89,12 @@ const ElectionShow = () => {
             <div className="text-container">{parse(election.info)}</div>
 
             <h3>Hlasy</h3>
+
+            {election.ended && (
+                <button onClick={() => handleDownloadVote(election)}>
+                    Stáhnout hlasy
+                </button>
+            )}
 
             <div className="votes">
                 <ul>

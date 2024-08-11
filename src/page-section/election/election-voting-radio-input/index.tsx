@@ -62,6 +62,7 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
                         name="vote"
                         value={option.value}
                         checked={values.vote === String(option.value)}
+                        disabled={election.ended}
                     />
                     <span className="radiomark"></span>
                     {option.text}
@@ -116,7 +117,8 @@ const ElectionVotingRadioInput: React.FC<electionVotingRadioInputProps> = ({
                                                 (preferVotes === 0 &&
                                                     !values.prefer_votes.includes(
                                                         String(subOption.value)
-                                                    ))
+                                                    )) ||
+                                                election.ended
                                             }
                                         />
                                         <span className="checkmark"></span>

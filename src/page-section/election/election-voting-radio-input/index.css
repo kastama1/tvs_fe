@@ -7,7 +7,7 @@
   color: var(--color-red);
   margin-bottom: 20px;
 }
-.option.vote .radio-container {
+.option.vote .radio-container label {
   background-color: rgba(132, 204, 22, 0.4);
 }
 .option .sub-options {

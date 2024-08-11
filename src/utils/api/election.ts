@@ -1,5 +1,6 @@
 import { axios, getErrorMessage } from '../axios'
 import { toast } from 'react-toastify'
+import fileDownload from 'js-file-download'
 
 const list = async () => {
     const result = await axios.get(`/api/elections`).catch((error) => {
@@ -91,6 +92,20 @@ const vote = (id: string, data: any) => {
             getErrorMessage(error)
         })
 }
+
+const downloadVotes = (id: string) => {
+    axios
+        .get(`/api/elections/${id}/download-votes`, {
+            responseType: 'blob',
+        })
+        .then((response) => {
+            fileDownload(response.data, 'Votes.zip')
+            toast.success('Hlasy byly staženy v pořádku')
+        })
+        .catch((error) => {
+            getErrorMessage(error)
+        })
+}
 export default {
     list,
     show,
@@ -101,4 +116,5 @@ export default {
     assignOptions,
     getVote,
     vote,
+    downloadVotes,
 }

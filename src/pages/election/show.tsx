@@ -33,10 +33,6 @@ const ElectionShow = () => {
         return <Loading />
     }
 
-    if (!election.published) {
-        navigate(-1)
-    }
-
     let buttonText = ''
     if (election.votable === 'candidates') {
         buttonText = 'Zobrazit kandidáty'
@@ -53,10 +49,16 @@ const ElectionShow = () => {
                 {buttonText}
             </ButtonLink>
 
-            {election.active && (
+            {election.active ? (
                 <ButtonLink to={`/elections/${election.id}/voting`}>
                     Přejít volit
                 </ButtonLink>
+            ) : (
+                election.ended && (
+                    <ButtonLink to={`/elections/${election.id}/voting`}>
+                        Prohlédnout hlas
+                    </ButtonLink>
+                )
             )}
         </>
     )

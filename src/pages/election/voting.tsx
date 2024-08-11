@@ -1,7 +1,8 @@
 import { useTitle } from '../../hooks/useTitle'
 import Heading from '../../components/heading'
 import { useEffect, useState } from 'react'
-import api from '../../utils/api/election'
+import electionApi from '../../utils/api/election'
+import voteApi from '../../utils/api/vote'
 import useAuth from '../../hooks/useAuth'
 import { useNavigate, useParams } from 'react-router-dom'
 import ElectionModel from '../../utils/models/election.model'
@@ -22,7 +23,7 @@ const ElectionVoting = () => {
 
     useEffect(() => {
         if (user && id) {
-            api.show(id).then((data) => {
+            electionApi.show(id).then((data) => {
                 if (data) {
                     setElection(data)
                 } else {
@@ -30,7 +31,7 @@ const ElectionVoting = () => {
                 }
             })
 
-            api.getVote(id).then((data) => {
+            electionApi.getVote(id).then((data) => {
                 setVote(data)
                 setLoadingVote(false)
             })
@@ -44,8 +45,8 @@ const ElectionVoting = () => {
                 return
             }
 
-            api.vote(id, data)
-            api.getVote(id).then((data) => {
+            electionApi.vote(id, data)
+            electionApi.getVote(id).then((data) => {
                 setVote(data)
             })
 
@@ -62,6 +63,10 @@ const ElectionVoting = () => {
         }
     }
 
+    const handleDownloadVote = (vote: VoteModel) => {
+        voteApi.download(String(vote.id))
+    }
+
     const initialValues = {
         vote: vote && vote.value ? String(vote.value) : null,
         prefer_votes: vote?.votes
@@ -73,15 +78,16 @@ const ElectionVoting = () => {
         return <Loading />
     }
 
-    if (!election.active) {
-        navigate(-1)
-    }
-
     return (
         <>
             <Heading>{'Hlasování ' + election.name}</Heading>
+            {vote && election.ended && (
+                <button onClick={() => handleDownloadVote(vote)}>
+                    Stáhnout hlas
+                </button>
+            )}
 
-            {election.active && initialValues && (
+            {initialValues && (
                 <ElectionVotingForm
                     election={election}
                     initialValues={initialValues}

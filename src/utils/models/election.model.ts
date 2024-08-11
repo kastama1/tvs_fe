@@ -14,6 +14,7 @@ interface Election {
     candidates: CandidateModel[]
     published: boolean
     active: boolean
+    ended: boolean
     publishFrom: string
     startFrom: string
     endTo: string
