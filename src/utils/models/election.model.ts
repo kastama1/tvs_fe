@@ -15,6 +15,7 @@ interface Election {
     published: boolean
     active: boolean
     ended: boolean
+    userVoted: boolean
     publishFrom: string
     startFrom: string
     endTo: string

@@ -24,7 +24,7 @@
 .option .sub-options label {
   padding: 20px 80px;
 }
-.option .sub-options .sub-option.vote {
+.option .sub-options .sub-option.vote label {
   background-color: rgba(132, 204, 22, 0.4);
 }
 .option label {

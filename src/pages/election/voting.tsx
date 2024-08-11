@@ -78,6 +78,10 @@ const ElectionVoting = () => {
         return <Loading />
     }
 
+    if (!election.active && !election.userVoted) {
+        navigate(-1)
+    }
+
     return (
         <>
             <Heading>{'Hlasování ' + election.name}</Heading>

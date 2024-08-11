@@ -33,6 +33,10 @@ const ElectionView = () => {
         return <Loading />
     }
 
+    if (!election.active && !election.userVoted) {
+        navigate(-1)
+    }
+
     let headline = ''
     let list
     if (election.votable === 'candidates') {
