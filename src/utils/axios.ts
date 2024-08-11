@@ -52,6 +52,7 @@ axios.interceptors.request.use(
 )
 
 export const getErrorMessage = (error: any) => {
+    console.error(error)
     if (error.response.status && error.response.status === 422) {
         toast.error(error.response.data.message)
     } else if (error.response.status && error.response.status === 403) {
