@@ -33,7 +33,7 @@ const ElectionView = () => {
         return <Loading />
     }
 
-    if (!election.active && !election.userVoted) {
+    if (!election.published && !election.userVoted) {
         navigate(-1)
     }
 
